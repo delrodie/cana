@@ -39,7 +39,7 @@
                             <tbody>
 							{% for marque in marques %}
                                 <tr>
-                                    <td class="text-right">{{ marque.id }}</td>
+                                    <td class="text-right">{{ loop.index }}</td>
                                     <td>{{ marque.libelle }}</td>
                                     <td>
 										{% if (marque.statut) %}

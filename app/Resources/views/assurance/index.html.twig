@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }} Gestion des marques {% endblock %}
+{% block title %}{{ parent() }} Gestion des assurances {% endblock %}
 
 {% block body %}
     <div class="container mt-0">
         <div class="row breadcrumb-bar">
             <div class="col-md-6">
-                <h3 class="block-title">Gestion de marques</h3>
+                <h3 class="block-title">Gestion des assurances</h3>
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb">
@@ -14,8 +14,8 @@
                             <span class="ti-home"></span>
                         </a>
                     </li>
-                    <li class="breadcrumb-item">Montures</li>
-                    <li class="breadcrumb-item active">Marques</li>
+                    <li class="breadcrumb-item">Parametres</li>
+                    <li class="breadcrumb-item active">assurances</li>
                 </ol>
             </div>
         </div>
@@ -25,31 +25,31 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="widget-area-2 proclinic-box-shadow">
-                    <h3 class="widget-title">Listes des marques</h3>
+                    <h3 class="widget-title">Listes des assurances</h3>
                     <div class="table-responsive mb-3">
                         <table id="tableId" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th class="text-center">Marques</th>
+                                <th class="text-center">assurances</th>
                                 <th class="text-center">Statuts</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-							{% for marque in marques %}
+							{% for assurance in assurances %}
                                 <tr>
                                     <td class="text-right">{{ loop.index }}</td>
-                                    <td>{{ marque.libelle }}</td>
+                                    <td>{{ assurance.libelle }}</td>
                                     <td>
-										{% if (marque.statut) %}
-                                           <span class="badge badge-success">actif</span>
-                                        {% else %}
+										{% if (assurance.statut) %}
+                                            <span class="badge badge-success">actif</span>
+										{% else %}
                                             <span class="badge badge-danger">Désactivé</span>
 										{% endif %}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ absolute_url(path('marque_edit', {'slug': marque.slug})) }}">
+                                        <a href="{{ absolute_url(path('assurance_edit', {'slug': assurance.slug})) }}">
                                             <span class="ti-pencil-alt"></span>
                                         </a>
                                     </td>
@@ -63,18 +63,18 @@
 
             <div class="col-md-6">
                 <div class="widget-area-2 proclinic-box-shadow">
-                    <h3 class="widget-title">Creer une marques</h3>
-                    {{ form_start(form) }}
+                    <h3 class="widget-title">Creer une assurances</h3>
+					{{ form_start(form) }}
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label for="appbundle_marque_libelle">Libelle</label>
-                            {{ form_widget(form.libelle) }}
+                            <label for="appbundle_assurance_libelle">Libelle</label>
+							{{ form_widget(form.libelle) }}
                         </div>
                         <div class="form-check col-md-12 mb-2">
                             <div class="text-left">
                                 <div class="custom-control custom-checkbox">
-                                    {{ form_widget(form.statut) }}
-                                    <label class="custom-control-label" for="appbundle_marque_statut">Activé</label>
+									{{ form_widget(form.statut) }}
+                                    <label class="custom-control-label" for="appbundle_assurance_statut">Activé</label>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
                         </div>
                     </div>
-                    {{ form_end(form) }}
+					{{ form_end(form) }}
                 </div>
             </div>
         </div>
@@ -91,11 +91,11 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+	{{ parent() }}
     <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
     <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
