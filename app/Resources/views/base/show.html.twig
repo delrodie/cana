@@ -1,66 +1,13 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Base</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ base.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ base.libelle }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ base.description }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{% if base.statut %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ base.slug }}</td>
-            </tr>
-            <tr>
-                <th>Publiepar</th>
-                <td>{{ base.publiePar }}</td>
-            </tr>
-            <tr>
-                <th>Modifiepar</th>
-                <td>{{ base.modifiePar }}</td>
-            </tr>
-            <tr>
-                <th>Publiele</th>
-                <td>{{ base.publieLe|date('d-m-Y H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Modifiele</th>
-                <td>{{ base.modifieLe|date('d-m-Y H:i:s') }}</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                <img src="{{ asset('uploads/'~ base.imageName) | imagine_filter('base_grd') }}" alt="{{ base.libelle }}" />
-              </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('base_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('base_edit', { 'id': base.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+	{% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

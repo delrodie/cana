@@ -1,13 +1,217 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}VisioPlus 3.0 ::{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="{{ absolute_url(asset('ressources/images/favicon.png')) }}">
+	{% block stylesheets %}
+		{% stylesheets
+			'ressources/css/bootstrap.min.css'
+			'ressources/css/themify-icons.css'
+			'ressources/css/animate.css'
+			'ressources/css/styles.css'
+			'ressources/css/green.css'
+			'ressources/css/responsive.css'
+			'ressources/charts/css/morris.css'
+			'ressources/css/jquery-jvectormap.css'
+			filter='cssrewrite' output='ressources/css/visioplus.css'
+		%}
+            <link rel="stylesheet" href="{{ absolute_url(asset_url)}}" id="style_theme" />
+		{% endstylesheets %}
+	{% endblock %}
+    <script src="{{ absolute_url(asset('ressources/js/modernizr.min.js')) }}"></script>
+</head>
+
+<body>
+<div class="loading">
+    <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div id="content">
+        <div class="container top-brand">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <div class="sidebar-header"> <a href="index.html"><img src="{{ absolute_url(asset('ressources/images/logo.png')) }}" class="logo" alt="logo"></a>
+                    </div>
+                </div>
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span title="Fullscreen" class="ti-fullscreen fullscreen"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target=".proclinic-modal-lg">
+                            <span class="ti-search"></span>
+                        </a>
+                        <div class="modal fade proclinic-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lorvens">
+                                <div class="modal-content proclinic-box-shadow2">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Rechercher Client/</h5>
+                                        <span class="ti-close" data-dismiss="modal" aria-label="Close">
+											</span>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="search-term" placeholder="Rechercher ici">
+                                                <button type="button" class="btn btn-lorvens proclinic-bg">
+                                                    <span class="ti-location-arrow"></span> Rechercher</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="ti-announcement"></span>
+                        </a>
+                        <div class="dropdown-menu proclinic-box-shadow2 notifications animated flipInY">
+                            <h5>Notifications</h5>
+                            <a class="dropdown-item" href="#">
+                                <span class="ti-wheelchair"></span> New Patient Added</a>
+                            <a class="dropdown-item" href="#">
+                                <span class="ti-money"></span> Patient payment done</a>
+                            <a class="dropdown-item" href="#">
+                                <span class="ti-time"></span>Patient Appointment booked</a>
+                            <a class="dropdown-item" href="#">
+                                <span class="ti-wheelchair"></span> New Patient Added</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="ti-user"></span>
+                        </a>
+                        <div class="dropdown-menu proclinic-box-shadow2 profile animated flipInY">
+                            <h5>Delrodie Amoikon</h5>
+                            <a class="dropdown-item" href="#">
+                                <span class="ti-settings"></span> Changer le mot de passe</a>
+                            <a class="dropdown-item" href="{{ absolute_url(path('fos_user_security_logout')) }}">
+                                <span class="ti-power-off"></span> Deconnexion</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <!-- Menu -->
+        <div class="container menu-nav">
+            <nav class="navbar navbar-expand-lg proclinic-bg text-white">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="ti-menu text-white"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown {% if (current_menu == 'dashboard') %}active{% endif %}">
+                            <a class="nav-link" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-home"></span> Tableau de bord</a>
+                        </li>
+                        <li class="nav-item dropdown {% if (current_menu == 'client') %}active{% endif %}">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-wheelchair"></span> Clients</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Ajouter un client</a>
+                                <a class="dropdown-item" href="#">Tous les clients</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-user"></span> Montures</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Marques</a>
+                                <a class="dropdown-item" href="#">Montures</a>
+                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                                <a class="dropdown-item" href="#">Approvisionnements</a>
+                                <a class="dropdown-item" href="#">Destockage</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-pencil-alt"></span> Verres</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Types verres</a>
+                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                                <a class="dropdown-item" href="#">Approvisionnements</a>
+                                <a class="dropdown-item" href="#">Destockage</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-money"></span> Facturations</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Ventes</a>
+                                <a class="dropdown-item" href="#">Fcatures</a>
+                                <a class="dropdown-item" href="#">Payment Invoice</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-key"></span> Rendez-vous</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="add-room.html">Ajouter un RDV</a>
+                                <a class="dropdown-item" href="rooms.html">Liste des RDV</a>
+                                <a class="dropdown-item" href="edit-room.html">Liste des livraisons</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false"><span class="ti-file"></span> Paramètres</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Assurances </a>
+                                <a class="dropdown-item" href="#">Traitements</a>
+                                <a class="dropdown-item" href="#">Types assurances</a>
+                                <a class="dropdown-item" href="#">Utilisateurs</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- /Menu -->
+        {% block body %} {% endblock %}
+
+        <div class="container">
+            <div class="d-sm-flex justify-content-center">
+                <span class="text-muted text-center d-block d-sm-inline-block">Copyright © 2019 <a href="#" target="_blank">ESTHETE</a>. Tous droits reservés.</span>
+            </div>
+        </div>
+        <!-- /Copy Rights-->
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- Back to Top -->
+<a id="back-to-top" href="#" class="back-to-top">
+    <span class="ti-angle-up"></span>
+</a>
+
+{% block javascripts %}
+	{% javascripts
+		'ressources/js/jquery-3.2.1.min.js'
+		'ressources/js/popper.min.js'
+		'ressources/js/bootstrap.min.js'
+		'ressources/charts/js/raphael-min.js'
+		'ressources/charts/js/morris.min.js'
+		'ressources/js/custom-morris.js'
+		'ressources/js/custom.js'
+		output='backoffice/js/app.js'
+	%}
+        <script src="{{ absolute_url(asset_url)}}"></script>
+	{% endjavascripts %}
+{% endblock %}
+</body>
+
 </html>

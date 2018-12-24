@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>VisioPlus 3.0 :: Connexion</title>
+	<link rel="shortcut icon" type="image/png" href="{{ absolute_url(asset('ressources/images/favicon.png')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/bootstrap.min.css')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/themify-icons.css')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/styles.css')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/green.css')) }}" id="style_theme">
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/responsive.css')) }}">
+
+	<script src="{{ absolute_url(asset('ressources/js/modernizr.min.js')) }}"></script>
+</head>
+
+<body class="auth-bg" style="background: url('ressources/images/bg.jpg') no-repeat">
+<div class="loading">
+	<div class="spinner">
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
+	</div>
+</div>
+
+<div class="wrapper">
+	<!-- Page Content  -->
+	<div id="content">
+		<div class="container">
+			<div>
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+					<a href="{{ path('fos_user_security_logout') }}">
+						{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+					</a>
+				{% else %}
+					<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+				{% endif %}
+			</div>
+
+			{% if app.request.hasPreviousSession %}
+				{% for type, messages in app.session.flashbag.all() %}
+					{% for message in messages %}
+						<div class="flash-{{ type }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			{% endif %}
+
+			<div>
+			{% block fos_user_content %}
+			{% endblock fos_user_content %}
+		</div>
+	</div>
+</div>
+<script src="{{ absolute_url(asset('ressources/js/jquery-3.2.1.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('ressources/js/popper.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('ressources/js/bootstrap.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('ressources/js/custom.js')) }}"></script>
+</body>
+
+
+</html>
