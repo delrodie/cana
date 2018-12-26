@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class MarqueRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * Liste des marques
+     */
+    public function findList($statut = null)
+    {
+        return $this->createQueryBuilder('m')
+                    ->where('m.statut = :statut')
+                    ->orderBy('m.libelle', 'ASC')
+                    ->setParameter('statut', $statut)
+            ;
+    }
 }

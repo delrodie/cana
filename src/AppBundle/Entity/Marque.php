@@ -37,6 +37,11 @@ class Marque
     private $statut;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Monture", mappedBy="marque")
+     */
+    private $montures;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"libelle"})
@@ -254,5 +259,46 @@ class Marque
     public function getModifieLe()
     {
         return $this->modifieLe;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->montures = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add monture
+     *
+     * @param \AppBundle\Entity\Monture $monture
+     *
+     * @return Marque
+     */
+    public function addMonture(\AppBundle\Entity\Monture $monture)
+    {
+        $this->montures[] = $monture;
+
+        return $this;
+    }
+
+    /**
+     * Remove monture
+     *
+     * @param \AppBundle\Entity\Monture $monture
+     */
+    public function removeMonture(\AppBundle\Entity\Monture $monture)
+    {
+        $this->montures->removeElement($monture);
+    }
+
+    /**
+     * Get montures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMontures()
+    {
+        return $this->montures;
     }
 }

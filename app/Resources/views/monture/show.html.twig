@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Monture</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ monture.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ monture.reference }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ monture.montant }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ monture.genre }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ monture.stock }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if monture.statut %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ monture.slug }}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ monture.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ monture.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ monture.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ monture.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('monture_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('monture_edit', { 'id': monture.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
