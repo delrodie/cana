@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des traitements {% endblock %}
+
+{% block body %}
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Gestion des traitements</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Paramètres</li>
+                    <li class="breadcrumb-item active">traitements</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Listes des traitements</h3>
+                    <div class="table-responsive mb-3">
+                        <table id="tableId" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">traitements</th>
+                                <th class="text-center">Statuts</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+							{% for traitement in traitements %}
+                                <tr>
+                                    <td class="text-right">{{ loop.index }}</td>
+                                    <td>{{ traitement.libelle }}</td>
+                                    <td>
+										{% if (traitement.statut) %}
+                                            <span class="badge badge-success">actif</span>
+										{% else %}
+                                            <span class="badge badge-danger">Désactivé</span>
+										{% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ absolute_url(path('traitement_edit', {'slug': traitement.slug})) }}">
+                                            <span class="ti-pencil-alt"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+							{% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Creer une traitements</h3>
+					{{ form_start(form) }}
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="appbundle_traitement_libelle">Libelle</label>
+							{{ form_widget(form.libelle) }}
+                        </div>
+                        <div class="form-check col-md-12 mb-2">
+                            <div class="text-left">
+                                <div class="custom-control custom-checkbox">
+									{{ form_widget(form.statut) }}
+                                    <label class="custom-control-label" for="appbundle_traitement_statut">Activé</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 mb-5 text-right">
+                            <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+                        </div>
+                    </div>
+					{{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+{% endblock %}
