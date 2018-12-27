@@ -6,12 +6,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Assurance
+ * Client
  *
- * @ORM\Table(name="assurance")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AssuranceRepository")
+ * @ORM\Table(name="client")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
  */
-class Assurance
+class Client
 {
     /**
      * @var int
@@ -25,9 +25,44 @@ class Assurance
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255)
      */
-    private $libelle;
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenoms", type="string", length=255)
+     */
+    private $prenoms;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sexe", type="string", length=255)
+     */
+    private $sexe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cel", type="string", length=255, nullable=true)
+     */
+    private $cel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tel", type="string", length=255, nullable=true)
+     */
+    private $tel;
 
     /**
      * @var bool
@@ -37,14 +72,15 @@ class Assurance
     private $statut;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Client", mappedBy="assurance")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Assurance", inversedBy="clients")
+     * @ORM\JoinColumn(name="assurance_id", referencedColumnName="id")
      */
-    private $clients;
+    private $assurance;
 
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"libelle"})
+     * @Gedmo\Slug(fields={"nom","prenoms"})
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
@@ -94,27 +130,147 @@ class Assurance
     }
 
     /**
-     * Set libelle
+     * Set nom
      *
-     * @param string $libelle
+     * @param string $nom
      *
-     * @return Assurance
+     * @return Client
      */
-    public function setLibelle($libelle)
+    public function setNom($nom)
     {
-        $this->libelle = $libelle;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get libelle
+     * Get nom
      *
      * @return string
      */
-    public function getLibelle()
+    public function getNom()
     {
-        return $this->libelle;
+        return $this->nom;
+    }
+
+    /**
+     * Set prenoms
+     *
+     * @param string $prenoms
+     *
+     * @return Client
+     */
+    public function setPrenoms($prenoms)
+    {
+        $this->prenoms = $prenoms;
+
+        return $this;
+    }
+
+    /**
+     * Get prenoms
+     *
+     * @return string
+     */
+    public function getPrenoms()
+    {
+        return $this->prenoms;
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param string $sexe
+     *
+     * @return Client
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return string
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return Client
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set cel
+     *
+     * @param string $cel
+     *
+     * @return Client
+     */
+    public function setCel($cel)
+    {
+        $this->cel = $cel;
+
+        return $this;
+    }
+
+    /**
+     * Get cel
+     *
+     * @return string
+     */
+    public function getCel()
+    {
+        return $this->cel;
+    }
+
+    /**
+     * Set tel
+     *
+     * @param string $tel
+     *
+     * @return Client
+     */
+    public function setTel($tel)
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    /**
+     * Get tel
+     *
+     * @return string
+     */
+    public function getTel()
+    {
+        return $this->tel;
     }
 
     /**
@@ -122,7 +278,7 @@ class Assurance
      *
      * @param boolean $statut
      *
-     * @return Assurance
+     * @return Client
      */
     public function setStatut($statut)
     {
@@ -146,7 +302,7 @@ class Assurance
      *
      * @param string $slug
      *
-     * @return Assurance
+     * @return Client
      */
     public function setSlug($slug)
     {
@@ -170,7 +326,7 @@ class Assurance
      *
      * @param string $publiePar
      *
-     * @return Assurance
+     * @return Client
      */
     public function setPubliePar($publiePar)
     {
@@ -194,7 +350,7 @@ class Assurance
      *
      * @param string $modifiePar
      *
-     * @return Assurance
+     * @return Client
      */
     public function setModifiePar($modifiePar)
     {
@@ -218,7 +374,7 @@ class Assurance
      *
      * @param \DateTime $publieLe
      *
-     * @return Assurance
+     * @return Client
      */
     public function setPublieLe($publieLe)
     {
@@ -242,7 +398,7 @@ class Assurance
      *
      * @param \DateTime $modifieLe
      *
-     * @return Assurance
+     * @return Client
      */
     public function setModifieLe($modifieLe)
     {
@@ -260,45 +416,28 @@ class Assurance
     {
         return $this->modifieLe;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add client
+     * Set assurance
      *
-     * @param \AppBundle\Entity\Client $client
+     * @param \AppBundle\Entity\Assurance $assurance
      *
-     * @return Assurance
+     * @return Client
      */
-    public function addClient(\AppBundle\Entity\Client $client)
+    public function setAssurance(\AppBundle\Entity\Assurance $assurance = null)
     {
-        $this->clients[] = $client;
+        $this->assurance = $assurance;
 
         return $this;
     }
 
     /**
-     * Remove client
+     * Get assurance
      *
-     * @param \AppBundle\Entity\Client $client
+     * @return \AppBundle\Entity\Assurance
      */
-    public function removeClient(\AppBundle\Entity\Client $client)
+    public function getAssurance()
     {
-        $this->clients->removeElement($client);
-    }
-
-    /**
-     * Get clients
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClients()
-    {
-        return $this->clients;
+        return $this->assurance;
     }
 }

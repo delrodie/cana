@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ parent() }} Gestion des montures {% endblock %}
+{% block title %}{{ parent() }} Gestion des clients {% endblock %}
 
 {% block body %}
     <div class="container mt-0">
         <div class="row breadcrumb-bar">
             <div class="col-md-6">
-                <h3 class="block-title">Gestion de montures</h3>
+                <h3 class="block-title">Gestion de clients</h3>
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb">
@@ -14,8 +14,8 @@
                             <span class="ti-home"></span>
                         </a>
                     </li>
-                    <li class="breadcrumb-item">Montures</li>
-                    <li class="breadcrumb-item active">montures</li>
+                    <li class="breadcrumb-item">clients</li>
+                    <li class="breadcrumb-item active">Modification</li>
                 </ol>
             </div>
         </div>
@@ -25,10 +25,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="widget-area-2 proclinic-box-shadow">
-                    <h3 class="widget-title">Modifier la monture {{ monture.marque.libelle }} {{ monture.reference }}</h3>
+                    <h3 class="widget-title">Modifier le client {{ client.nom }} {{ client.prenoms }}</h3>
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a href="{{ absolute_url(path('monture_index')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-list"></span> Liste</a>
+                            <a href="{{ absolute_url(path('client_index')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-list"></span> Liste</a>
                         </div>
                     </div>
                     {% for message in app.flashes('notice') %}
@@ -43,41 +43,52 @@
                     <div class="row">
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_monture_marque">Marques</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_marque">Assurance</label>
                                 <div class="col-md-8">
-                                    {{ form_widget(edit_form.marque) }}
+                                    {{ form_widget(edit_form.assurance) }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_monture_reference">References</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_reference">Nom</label>
                                 <div class="col-md-8">
-                                    {{ form_widget(edit_form.reference) }}
+                                    {{ form_widget(edit_form.nom) }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_monture_genre">Genre</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_genre">Prenoms</label>
                                 <div class="col-md-8">
-                                    {{ form_widget(edit_form.genre) }}
+                                    {{ form_widget(edit_form.prenoms) }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_monture_montant">Montant</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_montant">Statut</label>
                                 <div class="col-md-8">
-                                    {{ form_widget(edit_form.montant) }}
+                                    {{ form_widget(edit_form.sexe) }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_monture_stock">Stock</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_stock">Localisation</label>
                                 <div class="col-md-8">
-                                    {{ form_widget(edit_form.stock) }}
+                                    {{ form_widget(edit_form.adresse) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <div class="row">
+                                <label class="col-md-4 text-right" for="appbundle_client_stock">Contact</label>
+                                <div class="col-md-4">
+                                    {{ form_widget(edit_form.tel) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_widget(edit_form.cel) }}
                                 </div>
                             </div>
                         </div>
@@ -88,19 +99,25 @@
                                     <div class="text-left">
                                         <div class="custom-control custom-checkbox">
                                             {{ form_widget(edit_form.statut) }}
-                                            <label class="custom-control-label" for="appbundle_monture_statut">Activé</label>
+                                            {% if client.statut %}
+                                                <label class="custom-control-label" for="appbundle_client_statut">Désactivez</label>
+                                            {% else %}
+                                                <label class="custom-control-label" for="appbundle_client_statut">Activez</label>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-md-12 mb-5 text-right">
+                            <a href="{{ absolute_url(path('client_index')) }}" class="btn btn-secondary btn-lg">Annuler</a>
                             <button type="submit" class="btn btn-primary btn-lg">Modifier</button>
                         </div>
                     </div>
-                    {{ form_end(edit_form) }}<div class="row">
+                    {{ form_end(edit_form) }}
+                    <div class="row">
                         <div class="col-md-12">
-                            {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer cette monture ?");'}}) }}
+                            {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce client ?");'}}) }}
                             <input type="submit" value="Supprimer" class="btn btn-danger btn-lg">
                             {{ form_end(delete_form) }}
                         </div>

@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class AssuranceRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     *  Liste des assurances
+     */
+    public function findList($statut = null)
+    {
+        return $this->createQueryBuilder('a')
+                    ->where('a.statut = :stat')
+                    ->orderBy('a.libelle', 'ASC')
+                    ->setParameter('stat', $statut)
+            ;
+    }
 }
