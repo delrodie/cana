@@ -78,6 +78,11 @@ class Client
     private $assurance;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="client")
+     */
+    private $factures;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"nom","prenoms"})
@@ -439,5 +444,46 @@ class Client
     public function getAssurance()
     {
         return $this->assurance;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->factures = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Client
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }

@@ -6,12 +6,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Monture
+ * Typeverre
  *
- * @ORM\Table(name="monture")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MontureRepository")
+ * @ORM\Table(name="typeverre")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TypeverreRepository")
  */
-class Monture
+class Typeverre
 {
     /**
      * @var int
@@ -25,30 +25,9 @@ class Monture
     /**
      * @var string
      *
-     * @ORM\Column(name="reference", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255)
      */
-    private $reference;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="montant", type="integer", nullable=true)
-     */
-    private $montant;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="genre", type="string", length=255, nullable=true)
-     */
-    private $genre;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="stock", type="integer", nullable=true)
-     */
-    private $stock;
+    private $libelle;
 
     /**
      * @var bool
@@ -58,20 +37,14 @@ class Monture
     private $statut;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Marque", inversedBy="montures")
-     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id")
-     */
-    private $marque;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="monture")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="typeverre")
      */
     private $factures;
 
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"genre","reference"})
+     * @Gedmo\Slug(fields={"libelle"})
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
@@ -120,99 +93,27 @@ class Monture
     }
 
     /**
-     * Set reference
+     * Set libelle
      *
-     * @param string $reference
+     * @param string $libelle
      *
-     * @return Monture
+     * @return Typeverre
      */
-    public function setReference($reference)
+    public function setLibelle($libelle)
     {
-        $this->reference = $reference;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
     /**
-     * Get reference
+     * Get libelle
      *
      * @return string
      */
-    public function getReference()
+    public function getLibelle()
     {
-        return $this->reference;
-    }
-
-    /**
-     * Set montant
-     *
-     * @param integer $montant
-     *
-     * @return Monture
-     */
-    public function setMontant($montant)
-    {
-        $this->montant = $montant;
-
-        return $this;
-    }
-
-    /**
-     * Get montant
-     *
-     * @return int
-     */
-    public function getMontant()
-    {
-        return $this->montant;
-    }
-
-    /**
-     * Set genre
-     *
-     * @param string $genre
-     *
-     * @return Monture
-     */
-    public function setGenre($genre)
-    {
-        $this->genre = $genre;
-
-        return $this;
-    }
-
-    /**
-     * Get genre
-     *
-     * @return string
-     */
-    public function getGenre()
-    {
-        return $this->genre;
-    }
-
-    /**
-     * Set stock
-     *
-     * @param integer $stock
-     *
-     * @return Monture
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
-
-        return $this;
-    }
-
-    /**
-     * Get stock
-     *
-     * @return int
-     */
-    public function getStock()
-    {
-        return $this->stock;
+        return $this->libelle;
     }
 
     /**
@@ -220,7 +121,7 @@ class Monture
      *
      * @param boolean $statut
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setStatut($statut)
     {
@@ -238,13 +139,20 @@ class Monture
     {
         return $this->statut;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->factures = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set slug
      *
      * @param string $slug
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setSlug($slug)
     {
@@ -268,7 +176,7 @@ class Monture
      *
      * @param string $publiePar
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setPubliePar($publiePar)
     {
@@ -292,7 +200,7 @@ class Monture
      *
      * @param string $modifiePar
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setModifiePar($modifiePar)
     {
@@ -316,7 +224,7 @@ class Monture
      *
      * @param \DateTime $publieLe
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setPublieLe($publieLe)
     {
@@ -340,7 +248,7 @@ class Monture
      *
      * @param \DateTime $modifieLe
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function setModifieLe($modifieLe)
     {
@@ -360,42 +268,11 @@ class Monture
     }
 
     /**
-     * Set marque
-     *
-     * @param \AppBundle\Entity\Marque $marque
-     *
-     * @return Monture
-     */
-    public function setMarque(\AppBundle\Entity\Marque $marque = null)
-    {
-        $this->marque = $marque;
-
-        return $this;
-    }
-
-    /**
-     * Get marque
-     *
-     * @return \AppBundle\Entity\Marque
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->factures = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add facture
      *
      * @param \AppBundle\Entity\Facture $facture
      *
-     * @return Monture
+     * @return Typeverre
      */
     public function addFacture(\AppBundle\Entity\Facture $facture)
     {
