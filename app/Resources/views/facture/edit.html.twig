@@ -1,0 +1,313 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des factures {% endblock %}
+
+{% block body %}
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Gestion de factures</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ absolute_url(path('homepage')) }}">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">factures</li>
+                    <li class="breadcrumb-item active">factures</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Creer une factures</h3>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="{{ absolute_url(path('facture_index')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-list"></span> Liste</a>
+                        </div>
+                    </div>
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+                            <strong>{{ message }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    {{ form_start(edit_form, {'attr': {'id': 'facturation'}}) }}
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="appbundle_facture_client">Client</label>
+                                    {{ form_widget(edit_form.client) }}
+                                </div>
+                                <div class="col-md-4" id="facture-datepicker">
+                                    <label for="appbundle_facture_date">Date</label>
+                                    <div class="input-group date">
+                                        {{ form_widget(edit_form.date) }}
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="appbundle_facture_typeverre">Types de verres</label>
+                                    {{ form_widget(edit_form.typeverre) }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="appbundle_facture_traitement">Traitement</label>
+                                    {{ form_widget(edit_form.traitement) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_odSph">&OElig;il Droit Sphère</label>
+                                    <select id="appbundle_facture_odSph" name="odSph" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="PLAN">-- Sphère --</option>
+                                        {% for i in range(low=+20.00, high=-20.00, step=0.25)  %}
+                                            {% if (i == 0) %}
+                                                <option value="PLAN">PLAN</option>
+                                            {% elseif (i > 0) %}
+                                                <option value="+{{ i }}">+{{ i }}</option>
+                                            {% else %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_odCyl">&OElig;il droit Cylindre</label>
+                                    <select id="appbundle_facture_odCyl" name="odCyl" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="PLAN">-- Cylindre --</option>
+                                        {% for i in range(low=+10.00, high=-10.00, step=0.25)  %}
+                                            {% if (i == 0) %}
+                                                <option value="PLAN">PLAN</option>
+                                            {% elseif (i > 0) %}
+                                                <option value="+{{ i }}">+{{ i }}</option>
+                                            {% else %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_odAxe">&OElig;il droit axe</label>
+                                    <select id="appbundle_facture_odAxe" name="odAxe" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="0°">-- Axe --</option>
+                                        {% for i in range(low=0, high=180, step=5)  %}
+                                            <option value="{{ i }}°">{{ i }}°</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_odAdd">&OElig;il droit Addition</label>
+                                    <select id="appbundle_facture_odAdd" name="odAdd" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="0">-- Addition --</option>
+                                        {% for i in range(low=0, high=3.50, step=0.25)  %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_odQte">Quantite</label>
+                                    {{ form_widget(edit_form.odQte) }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_odMontant">Montant</label>
+                                    {{ form_widget(edit_form.odMontant) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_ogSph">&OElig;il gauche Sphère</label>
+                                    <select id="appbundle_facture_ogSph" name="ogSph" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="PLAN">-- Sphère --</option>
+                                        {% for i in range(low=+20.00, high=-20.00, step=0.25)  %}
+                                            {% if (i == 0) %}
+                                                <option value="PLAN">PLAN</option>
+                                            {% elseif (i > 0) %}
+                                                <option value="+{{ i }}">+{{ i }}</option>
+                                            {% else %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_ogCyl">&OElig;il gauche Cylindre</label>
+                                    <select id="appbundle_facture_ogCyl" name="ogCyl" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="PLAN">-- Cylindre --</option>
+                                        {% for i in range(low=+10.00, high=-10.00, step=0.25)  %}
+                                            {% if (i == 0) %}
+                                                <option value="PLAN">PLAN</option>
+                                            {% elseif (i > 0) %}
+                                                <option value="+{{ i }}">+{{ i }}</option>
+                                            {% else %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_ogAxe">&OElig;il gauche axe</label>
+                                    <select id="appbundle_facture_ogAxe" name="ogAxe" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="0°">-- Axe --</option>
+                                        {% for i in range(low=0, high=180, step=5)  %}
+                                            <option value="{{ i }}°">{{ i }}°</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_ogAdd">&OElig;il droit Addition</label>
+                                    <select id="appbundle_facture_ogAdd" name="ogAdd" class="form-control facture-select" placeholder="selectionnez le client">
+                                        <option value="0">-- Addition --</option>
+                                        {% for i in range(low=0, high=3.50, step=0.25)  %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_ogQte">Quantite</label>
+                                    {{ form_widget(edit_form.ogQte) }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_ogMontant">Montant</label>
+                                    {{ form_widget(edit_form.ogMontant) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label for="appbundle_facture_monture">Monture</label>
+                                    {{ form_widget(edit_form.monture) }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="appbundle_facture_montantMonture">Montant</label>
+                                    {{ form_widget(edit_form.monturePrix) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_montantht">Montant Total</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.montantHT) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_remise">remise</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.remise) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_montanttc">Net à payer</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.montantTTC) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_partassurance">Part assurance</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.partAssurance) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_acompte">Acompte</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.acompte) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_rap">Reste à payer</label>
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_form.rap) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
+                                <div class="text-left">
+                                    <div class="custom-control custom-checkbox">
+                                        {{ form_widget(edit_form.statut) }}
+                                        <label class="custom-control-label" for="appbundle_facture_statut">Activé</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 mb-5 text-right">
+                            <input type="hidden" name="mtHT">
+                            <input type="hidden" name="mtTTC">
+                            <input type="hidden" name="RAP">
+                            <input type="hidden" name="Assurance">
+                            <input type="hidden" name="Accompte">
+                            <a href="{{ absolute_url(path('facture_index')) }}" class="btn btn-secondary btn-lg">Annuler</a>
+                            <button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+                        </div>
+                    </div>
+                    {{ form_end(edit_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/select2.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/select2.full.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker.fr.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/facturation.js')) }}"></script>
+    <script>
+        $(".facture-select").select2({
+            tags: true
+        });
+        $('#facture-datepicker input').datepicker({
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "fr",
+            multidate: false,
+            autoclose: true
+        });
+    </script>
+{% endblock %}

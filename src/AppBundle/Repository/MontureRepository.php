@@ -10,4 +10,23 @@ namespace AppBundle\Repository;
  */
 class MontureRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des montures
+     */
+    public function findList($statut = null)
+    {
+        if ($statut){
+            return $this->createQueryBuilder('m')
+                        ->leftJoin('m.marque', 'ma')
+                        ->where('m.statut = 1')->andWhere('m.stock > 0')
+                        ->orderBy('m.reference', 'ASC')
+                ;
+        }else{
+            return $this->createQueryBuilder('mo')
+                        ->leftJoin('mo.marque', 'ma')
+                        ->orderBy('mo.reference', 'ASC')
+                        ->getQuery()->getResult()
+                ;
+        }
+    }
 }

@@ -30,9 +30,9 @@ class Facture
     private $numero;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="montantHT", type="integer", nullable=true)
+     * @ORM\Column(name="montantHT", type="string", length=255, nullable=true)
      */
     private $montantHT;
 
@@ -51,16 +51,16 @@ class Facture
     private $tva;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="montantTTC", type="integer", nullable=true)
+     * @ORM\Column(name="montantTTC", type="string", length=255, nullable=true)
      */
     private $montantTTC;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="acompte", type="integer", nullable=true)
+     * @ORM\Column(name="acompte", type="string", length=255, nullable=true)
      */
     private $acompte;
 
@@ -72,9 +72,9 @@ class Facture
     private $rap;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="partAssurance", type="integer", nullable=true)
+     * @ORM\Column(name="partAssurance", type="string", length=255, nullable=true)
      */
     private $partAssurance;
 
@@ -121,9 +121,9 @@ class Facture
     private $odQte;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="odMontant", type="integer", nullable=true)
+     * @ORM\Column(name="odMontant", type="string", length=255, nullable=true)
      */
     private $odMontant;
 
@@ -163,11 +163,18 @@ class Facture
     private $ogQte;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="ogMontant", type="integer", nullable=true)
+     * @ORM\Column(name="ogMontant", type="string", length=255, nullable=true)
      */
     private $ogMontant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="monturePrix", type="string", length=255, nullable=true)
+     */
+    private $monturePrix;
 
     /**
      * @var bool
@@ -778,6 +785,22 @@ class Facture
     public function getNumero()
     {
         return $this->numero;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMonturePrix()
+    {
+        return $this->monturePrix;
+    }
+
+    /**
+     * @param int $monturePrix
+     */
+    public function setMonturePrix($monturePrix)
+    {
+        $this->monturePrix = $monturePrix;
     }
 
     /**

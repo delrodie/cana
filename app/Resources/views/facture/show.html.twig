@@ -1,0 +1,242 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des factures {% endblock %}
+
+{% block body %}
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Gestion de factures</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ absolute_url(path('homepage')) }}">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">factures</li>
+                    <li class="breadcrumb-item active">factures</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Creer une factures</h3>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="{{ absolute_url(path('facture_index')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-list"></span> Liste</a>
+                        </div>
+                    </div>
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+                            <strong>{{ message }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="">Assurance</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.client.assurance.libelle }}" style="color: #0b2e13; font-weight: bold;">
+                                </div>
+                                <div class="col-md-7">
+                                    <label for="appbundle_facture_client">Client</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.client.nom }} {{ facture.client.prenoms }}" style="color: #0b2e13; font-weight: bold;">
+                                </div>
+                                <div class="col-md-2" id="facture-datepicker">
+                                    <label for="appbundle_facture_date">Date</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" readonly value="{{ facture.date|date('d-m-Y') }}" style="color: #0b2e13; font-weight: bold; text-align: center;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="appbundle_facture_typeverre">Types de verres</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.typeverre.libelle }}" style="color: #0b2e13; font-weight: bold;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="appbundle_facture_traitement">Traitement</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.traitement.libelle }}" style="color: #0b2e13; font-weight: bold;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_odSph">&OElig;il Droit Sphère</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odSph }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_odCyl">&OElig;il droit Cylindre</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odCyl }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_odAxe">&OElig;il droit axe</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odAxe }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_odAdd">&OElig;il droit Addition</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odAdd }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_odQte">Quantite</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odQte }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_odMontant">Montant</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.odMontant|number_format(0,'','.') }}" style="color: #0b2e13; font-weight: bold; text-align: right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_ogSph">&OElig;il gauche Sphère</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogSph }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-6 col-md-2">
+                                    <label for="appbundle_facture_ogCyl">&OElig;il gauche Cylindre</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogCyl }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_ogAxe">&OElig;il gauche axe</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogAxe }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <label for="appbundle_facture_ogAdd">&OElig;il droit Addition</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogAdd }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_ogQte">Quantite</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogQte }}" style="color: #0b2e13; font-weight: bold; text-align: center">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="appbundle_facture_ogMontant">Montant</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.ogMontant|number_format(0,'','.') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label for="appbundle_facture_monture">Monture</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.monture.marque.libelle }} {{ facture.monture.reference }}" style="color: #0b2e13; font-weight: bold;">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="appbundle_facture_montantMonture">Montant</label>
+                                    <input type="text" class="form-control" readonly value="{{ facture.monturePrix|number_format(0,'','.') }}" style="color: #0b2e13; font-weight: bold; text-align: right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_montantht">Montant Total</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" readonly value="{{ facture.montantHT|number_format(0,'','.') }}" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_remise">remise</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" readonly value="{{ facture.remise }}%" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_montanttc">Net à payer</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" readonly value="{{ facture.montantTTC|number_format(0,'','.') }}" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_partassurance">Part assurance</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" readonly value="{{ facture.partAssurance|number_format(0,'','.') }}" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_acompte">Acompte</label>
+                                </div>
+                                <div class="col-md-3 text-right">
+                                    <input type="text" class="form-control" readonly value="{{ facture.acompte|number_format(0,'','.') }}" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 text-right">
+                                    <label for="appbundle_facture_rap">Reste à payer</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" readonly value="{{ facture.rap|number_format(0,'','.') }}" style="text-align: right; font-weight: bold;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
+                                <div class="text-left">
+                                    <div class="custom-control custom-checkbox">
+                                        {% if (facture.statut) %}
+                                            <label class="custom-control-label" for="appbundle_facture_statut">Activé</label>
+                                        {% else %}
+                                            <label class="custom-control-label" for="appbundle_facture_statut">Désactivé</label>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/select2.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/select2.full.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker.fr.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/facturation.js')) }}"></script>
+    <script>
+        $(".facture-select").select2({
+            tags: true
+        });
+        $('#facture-datepicker input').datepicker({
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "fr",
+            multidate: false,
+            autoclose: true
+        });
+    </script>
+{% endblock %}

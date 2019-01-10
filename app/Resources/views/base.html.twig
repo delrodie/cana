@@ -149,12 +149,12 @@
                                 <a class="dropdown-item" href="#">Destockage</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown {% if (current_menu == 'facture') %}active{% endif %}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-money"></span> Facturations</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Ventes</a>
-                                <a class="dropdown-item" href="#">Fcatures</a>
+                                <a class="dropdown-item" href="{{ absolute_url(path('facture_index')) }}">Ventes</a>
+                                <a class="dropdown-item" href="#">Factures</a>
                                 <a class="dropdown-item" href="#">Payment Invoice</a>
                             </div>
                         </li>

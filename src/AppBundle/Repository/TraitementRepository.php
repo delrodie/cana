@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class TraitementRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des traiteemnts
+     */
+    public function findList($statut = null)
+    {
+        if ($statut){
+            return $this->createQueryBuilder('t')
+                        ->where('t.statut = 1')->orderBy('t.libelle', 'ASC')
+                ;
+        }else{
+            return $this->createQueryBuilder('t')->orderBy('t.libelle', 'ASC')->getQuery()->getResult();
+        }
+    }
 }

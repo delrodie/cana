@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\NoResultException;
+
 /**
  * FactureRepository
  *
@@ -10,4 +12,37 @@ namespace AppBundle\Repository;
  */
 class FactureRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des facture
+     */
+    public function findList()
+    {
+        return $this->createQueryBuilder('f')->orderBy('f.id', 'DESC')->getQuery()->getResult();
+    }
+    /**
+     * Recherche du numero de la facture
+     */
+    public function getFactureNumber()
+    {
+        // Recherche du nombre de facture
+        $compteur = $this->createQueryBuilder('f')->select('count(f.id)')->getQuery()->getSingleScalarResult();
+
+        if ($compteur != 0){
+            // Si le compteur est different de 0 alors recuperer le dernier ID
+            $q = $this->createQueryBuilder('c')->select('c.id')->orderBy('c.id', 'DESC')->setMaxResults(1);
+            try{
+                $qb = $q->getQuery()->getSingleScalarResult();
+                // Incrementé de +1 l'id puis affecter sur 4 positions
+                $id = $qb + 1;
+                if ($id < 10){ return '000'.$id; }
+                elseif ($id < 100){ return '00'.$id; }
+                elseif ($id < 1000){ return '0'.$id; }
+                else{ return $id; }
+            } catch (NoResultException $e){
+                return $e;
+            }
+        } else{
+            return $code = '0001';
+        }
+    }
 }

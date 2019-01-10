@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class TypeverreRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des types de verres
+     */
+    public function findList($statut = null)
+    {
+        if ($statut){
+            return $this->createQueryBuilder('t')
+                        ->where('t.statut = 1')->orderBy('t.libelle', 'ASC')
+                ;
+        } else{
+            return $this->createQueryBuilder('t')->orderBy('t.libelle', 'ASC')->getQuery()->getResult();
+        }
+    }
 }

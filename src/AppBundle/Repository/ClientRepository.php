@@ -21,7 +21,7 @@ class ClientRepository extends \Doctrine\ORM\EntityRepository
                         ->leftJoin('c.assurance', 'a')
                         ->where('c.statut = 1')
                         ->orderBy('c.nom', 'ASC')
-                        ->getQuery()->getResult()
+                        //->getQuery()->getResult()
                         ;
         } else{
             return $this->createQueryBuilder('c')
