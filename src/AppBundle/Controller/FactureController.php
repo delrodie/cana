@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Facture;
 use AppBundle\Utils\Facturation;
+use AppBundle\Utils\Inventaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class FactureController extends Controller
      * @Route("/new", name="facture_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, Facturation $facturation)
+    public function newAction(Request $request, Facturation $facturation, Inventaire $inventaire)
     {
         $facture = new Facture();
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
@@ -63,6 +64,8 @@ class FactureController extends Controller
             $facture->setNumero($code); //dump($facture);die();
             $em->persist($facture);
             $em->flush();
+
+            $inventaire->destockage($facture->getMonture()->getId());
 
             return $this->redirectToRoute('facture_show', array('slug' => $facture->getSlug()));
         }
@@ -143,15 +146,20 @@ class FactureController extends Controller
      * @Route("/{id}", name="facture_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Facture $facture)
+    public function deleteAction(Request $request, Facture $facture, Inventaire $inventaire)
     {
         $form = $this->createDeleteForm($facture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($facture);
-            $em->flush();
+            if ($inventaire->approvisionnement($facture->getMonture()->getId())){
+                $em->remove($facture);
+                $em->flush();
+            }else{
+                return $this->redirectToRoute('facture_edit',['id'=> $facture->getId()]);
+            }
+
         }
 
         return $this->redirectToRoute('facture_index');

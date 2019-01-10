@@ -275,6 +275,11 @@
                         </div>
                     </div>
                     {{ form_end(edit_form) }}
+                    <div class="text-center">
+                        {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer la facture ?");'}}) }}
+                        <input type="submit" value="Supprimer" class="btn btn-danger">
+                        {{ form_end(delete_form) }}
+                    </div>
                 </div>
             </div>
         </div>
