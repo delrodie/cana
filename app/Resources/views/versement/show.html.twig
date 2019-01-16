@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Versement</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ versement.id }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ versement.montant }}</td>
+            </tr>
+            <tr>
+                <th>Acompte</th>
+                <td>{{ versement.acompte }}</td>
+            </tr>
+            <tr>
+                <th>Reste</th>
+                <td>{{ versement.reste }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if versement.statut %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ versement.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ versement.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ versement.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ versement.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('versement_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('versement_edit', { 'id': versement.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

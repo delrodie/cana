@@ -208,6 +208,11 @@ class Facture
     private $typeverre;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Versement", mappedBy="facture")
+     */
+    private $versements;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"numero"})
@@ -1017,5 +1022,46 @@ class Facture
     public function getTypeverre()
     {
         return $this->typeverre;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->versements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add versement
+     *
+     * @param \AppBundle\Entity\Versement $versement
+     *
+     * @return Facture
+     */
+    public function addVersement(\AppBundle\Entity\Versement $versement)
+    {
+        $this->versements[] = $versement;
+
+        return $this;
+    }
+
+    /**
+     * Remove versement
+     *
+     * @param \AppBundle\Entity\Versement $versement
+     */
+    public function removeVersement(\AppBundle\Entity\Versement $versement)
+    {
+        $this->versements->removeElement($versement);
+    }
+
+    /**
+     * Get versements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersements()
+    {
+        return $this->versements;
     }
 }

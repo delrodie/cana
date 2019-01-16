@@ -75,7 +75,8 @@
                                 <div class="col-sm-6 col-md-2">
                                     <label for="appbundle_facture_odSph">&OElig;il Droit Sphère</label>
                                     <select id="appbundle_facture_odSph" name="odSph" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="PLAN">-- Sphère --</option>
+                                        <option value="{{ facture.odSph }}">{{ facture.odSph }}</option>
+                                        <option value="PLAN"></option>
                                         {% for i in range(low=+20.00, high=-20.00, step=0.25)  %}
                                             {% if (i == 0) %}
                                                 <option value="PLAN">PLAN</option>
@@ -90,7 +91,8 @@
                                 <div class="col-sm-6 col-md-2">
                                     <label for="appbundle_facture_odCyl">&OElig;il droit Cylindre</label>
                                     <select id="appbundle_facture_odCyl" name="odCyl" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="PLAN">-- Cylindre --</option>
+                                        <option value="{{ facture.odCyl }}">{{ facture.odCyl }}</option>
+                                        <option value="PLAN"></option>
                                         {% for i in range(low=+10.00, high=-10.00, step=0.25)  %}
                                             {% if (i == 0) %}
                                                 <option value="PLAN">PLAN</option>
@@ -105,7 +107,8 @@
                                 <div class="col-sm-2 col-md-2">
                                     <label for="appbundle_facture_odAxe">&OElig;il droit axe</label>
                                     <select id="appbundle_facture_odAxe" name="odAxe" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="0°">-- Axe --</option>
+                                        <option value="{{ facture.odAxe }}">{{ facture.odAxe }}</option>
+                                        <option value="0°"></option>
                                         {% for i in range(low=0, high=180, step=5)  %}
                                             <option value="{{ i }}°">{{ i }}°</option>
                                         {% endfor %}
@@ -114,7 +117,8 @@
                                 <div class="col-sm-2 col-md-2">
                                     <label for="appbundle_facture_odAdd">&OElig;il droit Addition</label>
                                     <select id="appbundle_facture_odAdd" name="odAdd" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="0">-- Addition --</option>
+                                        <option value="{{ facture.odAdd }}">{{ facture.odAdd }}</option>
+                                        <option value="0"></option>
                                         {% for i in range(low=0, high=3.50, step=0.25)  %}
                                             <option value="{{ i }}">{{ i }}</option>
                                         {% endfor %}
@@ -135,7 +139,8 @@
                                 <div class="col-sm-6 col-md-2">
                                     <label for="appbundle_facture_ogSph">&OElig;il gauche Sphère</label>
                                     <select id="appbundle_facture_ogSph" name="ogSph" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="PLAN">-- Sphère --</option>
+                                        <option value="{{ facture.ogSph }}">{{ facture.ogSph }}</option>
+                                        <option value="PLAN"></option>
                                         {% for i in range(low=+20.00, high=-20.00, step=0.25)  %}
                                             {% if (i == 0) %}
                                                 <option value="PLAN">PLAN</option>
@@ -150,7 +155,8 @@
                                 <div class="col-sm-6 col-md-2">
                                     <label for="appbundle_facture_ogCyl">&OElig;il gauche Cylindre</label>
                                     <select id="appbundle_facture_ogCyl" name="ogCyl" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="PLAN">-- Cylindre --</option>
+                                        <option value="{{ facture.ogCyl }}" selected>{{ facture.ogCyl }}</option>
+                                        <option value="PLAN"></option>
                                         {% for i in range(low=+10.00, high=-10.00, step=0.25)  %}
                                             {% if (i == 0) %}
                                                 <option value="PLAN">PLAN</option>
@@ -165,16 +171,18 @@
                                 <div class="col-sm-2 col-md-2">
                                     <label for="appbundle_facture_ogAxe">&OElig;il gauche axe</label>
                                     <select id="appbundle_facture_ogAxe" name="ogAxe" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="0°">-- Axe --</option>
+                                        <option value="{{ facture.ogAxe }}">{{ facture.ogAxe }}</option>
+                                        <option value="0°"></option>
                                         {% for i in range(low=0, high=180, step=5)  %}
                                             <option value="{{ i }}°">{{ i }}°</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-sm-2 col-md-2">
-                                    <label for="appbundle_facture_ogAdd">&OElig;il droit Addition</label>
+                                    <label for="appbundle_facture_ogAdd">&OElig;il gauche Addition</label>
                                     <select id="appbundle_facture_ogAdd" name="ogAdd" class="form-control facture-select" placeholder="selectionnez le client">
-                                        <option value="0">-- Addition --</option>
+                                        <option value="{{ facture.ogAdd }}">{{ facture.ogAdd }}</option>
+                                        <option value="0"></option>
                                         {% for i in range(low=0, high=3.50, step=0.25)  %}
                                             <option value="{{ i }}">{{ i }}</option>
                                         {% endfor %}

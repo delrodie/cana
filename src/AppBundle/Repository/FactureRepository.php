@@ -19,6 +19,14 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('f')->orderBy('f.id', 'DESC')->getQuery()->getResult();
     }
+
+    /**
+     * LA facture concernée pas le versement
+     */
+    public function findFacture($facture)
+    {
+        return $this->createQueryBuilder('f')->where('f.slug = :slug')->setParameter('slug', $facture);
+    }
     /**
      * Recherche du numero de la facture
      */

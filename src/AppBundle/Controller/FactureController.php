@@ -66,6 +66,7 @@ class FactureController extends Controller
             $em->flush();
 
             $inventaire->destockage($facture->getMonture()->getId());
+            $facturation->encaissement($facture->getId());
 
             return $this->redirectToRoute('facture_show', array('slug' => $facture->getSlug()));
         }
