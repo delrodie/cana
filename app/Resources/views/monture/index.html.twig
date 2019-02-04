@@ -44,6 +44,24 @@
                             </button>
                         </div>
                     {% endfor %}
+                    {% for message in app.flashes('warning') %}
+                        <div class="alert alert-warning alert-dismissible text-center fade show mt-2 wow fadeInUp" role="alert">
+                            <strong>{{ message|raw }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button><br><br>
+                            <a href="{{ absolute_url(path('marque_new')) }}" class="btn btn-secondary">Annuler </a>
+                            <a href="{{ absolute_url(path('message_monture')) }}" class="btn btn-primary">Augmenter la quantité</a>
+                        </div>
+                    {% endfor %}
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger alert-dismissible text-center fade show mt-2 wow fadeInLeft" role="alert">
+                            <strong>{{ message|raw }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button><br><br>
+                        </div>
+                    {% endfor %}
                     <div class="table-responsive mb-3">
                         <table id="tableId" class="table table-bordered table-striped">
                             <thead>

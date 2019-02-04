@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Monture;
+use AppBundle\Utils\Inventaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Monture controller.
@@ -20,9 +22,11 @@ class MontureController extends Controller
      * @Route("/", name="monture_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Session $session, Inventaire $inventaire)
     {
         $em = $this->getDoctrine()->getManager();
+
+
 
         $montures = $em->getRepository('AppBundle:Monture')->findAll();
 
@@ -38,7 +42,7 @@ class MontureController extends Controller
      * @Route("/new", name="monture_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Session $session)
     {
         $monture = new Monture();
         $form = $this->createForm('AppBundle\Form\MontureType', $monture);
@@ -46,6 +50,13 @@ class MontureController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $existence = $em->getRepository('AppBundle:Monture')->findOneBy(['reference'=>$monture->getReference(), 'marque'=>$monture->getMarque()->getId()]);
+            if ($existence){
+                $this->addFlash('warning', 'Attention cette monture existe déjà. <br> Voulez-vous ajouter 1 de plus a sa quantité?');
+                $session->set('montureId', $existence->getId());
+                return $this->redirectToRoute('monture_index');
+            }
             $em->persist($monture);
             $em->flush();
 

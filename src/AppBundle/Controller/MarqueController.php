@@ -31,6 +31,13 @@ class MarqueController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // Verification d'existence du libelle dans la BD
+            $existence = $em->getRepository('AppBundle:Marque')->findOneBy(['libelle'=> $marque->getLibelle()]);
+            if ($existence){
+                $this->addFlash('notice',"Attention cette marque existe déjà. Veuillez entrer une autre marque.");
+                return $this->redirectToRoute('marque_index');
+
+            }
             $em->persist($marque);
             $em->flush();
 

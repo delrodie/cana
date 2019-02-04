@@ -210,6 +210,10 @@
 	%}
         <script src="{{ absolute_url(asset_url)}}"></script>
 	{% endjavascripts %}
+    <script src="{{ absolute_url(asset('ressources/js/wow.js')) }}"></script>
+    <script>
+        new WOW().init();
+    </script>
 {% endblock %}
 </body>
 
