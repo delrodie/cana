@@ -20,7 +20,7 @@ class VersementType extends AbstractType
         $facture = $this->facture;
         $builder
             //->add('montant', TextType::class,['attr'=>['class'=>'form-control']])
-            ->add('acompte', TextType::class,['attr'=>['class'=>'form-control']])
+            ->add('acompte', TextType::class,['attr'=>['class'=>'form-control', 'onkeyup'=>'verse()', 'autocomplete'=> 'off']])
             ->add('reste', TextType::class,['attr'=>['class'=>'form-control']])
             //->add('statut')
             //->add('publiePar')->add('modifiePar')->add('publieLe')->add('modifieLe')

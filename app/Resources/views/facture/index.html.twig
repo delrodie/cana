@@ -76,10 +76,12 @@
                                         </a> |
                                         <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
                                             <span class="ti-pencil-alt"></span>
-                                        </a> |
-                                        <a href="{{ absolute_url(path('versement_new', {'facture': facture.slug})) }}" title="Regler la facture">
-                                            <span class="ti-money"></span>
                                         </a>
+                                        {% if (facture.rap) %}
+                                            | <a href="{{ absolute_url(path('versement_new', {'facture': facture.slug})) }}" title="Regler la facture">
+                                                <span class="ti-money"></span>
+                                            </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

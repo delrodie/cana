@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Versement;
+use AppBundle\Utils\Facturation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class VersementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $versements = $em->getRepository('AppBundle:Versement')->findAll();
+        $versements = $em->getRepository('AppBundle:Versement')->findByFacture();
 
         return $this->render('versement/index.html.twig', array(
             'versements' => $versements,
@@ -38,18 +39,28 @@ class VersementController extends Controller
      * @Route("/new/{facture}", name="versement_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, $facture)
+    public function newAction(Request $request, $facture, Facturation $facturation)
     {
-        $versement = new Versement();
+        $versement = new Versement(); //dump($facture);die();
         $form = $this->createForm('AppBundle\Form\VersementType', $versement, ['facture'=> $facture]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $facture_rap = $request->get('facture_rap'); $versement->setMontant($facture_rap);
+            $rap = $request->get('rap'); $versement->setReste($rap);
+            $acompte = $request->get('acompte'); $versement->setAcompte($acompte);
+            $versement->setStatut(true);
+            //dump($facture);die();
             $em->persist($versement);
             $em->flush();
 
-            return $this->redirectToRoute('versement_show', array('id' => $versement->getId()));
+            $reduction = $facturation->reduction($facture, $rap);
+            if ($reduction){
+                return $this->redirectToRoute('versement_show', ['facture' => $facture]);
+            }else{
+                return $this->redirectToRoute('versement_index');
+            }
         }
         $em = $this->getDoctrine()->getManager();
         $factures = $em->getRepository('AppBundle:Facture')->findOneBy(array('slug'=>$facture));
@@ -65,16 +76,19 @@ class VersementController extends Controller
     /**
      * Finds and displays a versement entity.
      *
-     * @Route("/{id}", name="versement_show")
+     * @Route("/{facture}", name="versement_show")
      * @Method("GET")
      */
-    public function showAction(Versement $versement)
+    public function showAction($facture)
     {
-        $deleteForm = $this->createDeleteForm($versement);
+        $em = $this->getDoctrine()->getManager();
+
+
+        $versements = $em->getRepository('AppBundle:Versement')->findByFacture($facture); //dump($versements);die();
 
         return $this->render('versement/show.html.twig', array(
-            'versement' => $versement,
-            'delete_form' => $deleteForm->createView(),
+            'versements' => $versements,
+            'current_menu' => 'facture'
         ));
     }
 

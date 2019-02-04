@@ -62,5 +62,22 @@ class Facturation
         }
     }
 
+    /**
+     * Reduction du reste a payer de la facture dans la table facture
+     */
+    public function reduction ($factureNum = null, $rap = null)
+    {
+        if ($factureNum){
+            $facture = $this->em->getRepository('AppBundle:Facture')->findOneBy(['numero'=>$factureNum]);
+            $facture->setRap($rap);
+            $this->em->persist($facture);
+            $this->em->flush();
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

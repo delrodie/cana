@@ -10,4 +10,28 @@ namespace AppBundle\Repository;
  */
 class VersementRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des versements concernés par une facture
+     * Utiliser par versementController/showAction
+     */
+    public function findByFacture($facture = null)
+    {
+        if ($facture){
+            return $this->createQueryBuilder('v')
+                ->leftJoin('v.facture', 'f') ->addSelect('f')
+                ->leftJoin('f.client', 'c') ->addSelect('c')
+                ->where('f.numero = :numero')
+                ->orderBy('v.id', 'DESC')
+                ->setParameter('numero', $facture)
+                ->getQuery()->getResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('v')
+                ->leftJoin('v.facture', 'f') ->addSelect('f')
+                ->leftJoin('f.client', 'c') ->addSelect('c')
+                ->orderBy('v.id', 'DESC')
+                ->getQuery()->getResult()
+                ;
+        }
+    }
 }

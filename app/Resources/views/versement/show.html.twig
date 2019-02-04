@@ -1,60 +1,99 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des versements {% endblock %}
 
 {% block body %}
-    <h1>Versement</h1>
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Gestion des versements</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">versements</li>
+                    <li class="breadcrumb-item active">Liste</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ versement.id }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ versement.montant }}</td>
-            </tr>
-            <tr>
-                <th>Acompte</th>
-                <td>{{ versement.acompte }}</td>
-            </tr>
-            <tr>
-                <th>Reste</th>
-                <td>{{ versement.reste }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{% if versement.statut %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Publiepar</th>
-                <td>{{ versement.publiePar }}</td>
-            </tr>
-            <tr>
-                <th>Modifiepar</th>
-                <td>{{ versement.modifiePar }}</td>
-            </tr>
-            <tr>
-                <th>Publiele</th>
-                <td>{{ versement.publieLe }}</td>
-            </tr>
-            <tr>
-                <th>Modifiele</th>
-                <td>{{ versement.modifieLe }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 text-right">
 
-    <ul>
-        <li>
-            <a href="{{ path('versement_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('versement_edit', { 'id': versement.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                    </div>
+                </div>
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Listes des versements</h3>
+                    <div class="row mb-5">
+
+                    </div>
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+                            <strong>{{ message }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 mb-5">
+                            {% for versement in versements %}
+                                {% if loop.index == 1 %}
+                                    Client: <strong>{{ versement.facture.client.nom }} {{ versement.facture.client.prenoms }}</strong>
+                                    <br><br>
+                                    Contact : <strong>{{ versement.facture.client.cel }} / {{ versement.facture.client.tel }}</strong>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="table-responsive mb-3">
+                        <table id="tableId" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Factures</th>
+                                <th class="text-center">Date versement</th>
+                                <th class="text-center">Montants</th>
+                                <th class="text-center">Acompte</th>
+                                <th class="text-center">RAP</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for versement in versements %}
+                                <tr>
+                                    <td class="text-right">{{ loop.index }}</td>
+                                    <td>{{ versement.facture.numero }}</td>
+                                    <td class="text-center">{{ versement.publieLe|date('d-m-Y H:i:s') }}</td>
+                                    <td class="text-right">{{ versement.montant|number_format(0,'','.') }}</td>
+                                    <td class="text-right">{{ versement.acompte|number_format(0,'','.') }}</td>
+                                    <td class="text-right">{{ versement.reste|number_format(0,'','.') }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
 {% endblock %}
