@@ -57,38 +57,38 @@
 			<td colspan="2" class="left-border">TYPE DE MONTURE</td>
 			<td colspan="3" class="left-border text-center">PLAN ADD 1,00</td>
 			<td colspan="1" class="left-border right-border text-center">Montant:</td>
-			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right">{{ facture.monturePrix|number_format(0,'','.') }} FCFA</td>
 
 		</tr>
 		<tr>
 			<td colspan="2"></td>
 			<td colspan="4" class="left-border right-border text-right">MONTANT TOTAL</td>
-			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right">{{ facture.montantHT|number_format(0,'','.') }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="top-vide"></td>
 			<td colspan="4" class="left-border right-border text-right">REMISE</td>
-			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right">{{ facture.remise }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="top-vide"></td>
 			<td colspan="4" class="left-border right-border bottom-border text-right">NET A PAYER</td>
-			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">{{ facture.montantTTC|number_format(0,'','.') }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="top-vide"></td>
 			<td colspan="4" class="left-border right-border bottom-border text-right">PART ASSURANCE</td>
-			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">{{ facture.partAssurance|number_format(0,'','.') }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="top-vide"></td>
 			<td colspan="4" class="left-border right-border bottom-border text-right">ACCOMPTE</td>
-			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">{{ facture.acompte|number_format(0,'','.') }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="top-vide"></td>
 			<td colspan="4" class="left-border right-border bottom-border text-right">RESTE A PAYER</td>
-			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">{{ facture.rap|number_format(0,'','.') }} FCFA</td>
 		</tr>
 		<tr>
 			<td colspan="6" class="top-vide signature"></td>

@@ -22,7 +22,7 @@ function calculMontantHT(odroit = null, ogauche = null, montureMontant = null) {
 // Calcul du net a payer 
 function calculNAP(montantHT = null, remise = null) {
     if (!montantHT){ montantHT = 0;}
-    var resultat = montantHT * (1 - remise/100);
+    var resultat = montantHT - remise;
     return resultat;
 }
 
