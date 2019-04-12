@@ -38,7 +38,7 @@
         <div class="container top-brand">
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
-                    <div class="sidebar-header"> <a href="index.html"><img src="{{ absolute_url(asset('ressources/images/logo.png')) }}" class="logo" alt="logo"></a>
+                    <div class="sidebar-header"> <a href="{{ path('homepage') }}"><img src="{{ absolute_url(asset('ressources/images/logo.png')) }}" class="logo" alt="logo"></a>
                     </div>
                 </div>
                 <ul class="nav justify-content-end">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <span class="ti-announcement"></span>
@@ -88,7 +88,7 @@
                             <a class="dropdown-item" href="#">
                                 <span class="ti-wheelchair"></span> New Patient Added</a>
                         </div>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -117,7 +117,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown {% if (current_menu == 'dashboard') %}active{% endif %}">
-                            <a class="nav-link" href="#" role="button" aria-haspopup="true"
+                            <a class="nav-link" href="{{ path('homepage') }}" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-home"></span> Tableau de bord</a>
                         </li>
                         <li class="nav-item dropdown {% if (current_menu == 'client') %}active{% endif %}">
@@ -125,7 +125,7 @@
                                aria-expanded="false"><span class="ti-wheelchair"></span> Clients</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ absolute_url(path('client_new')) }}">Ajouter un client</a>
-                                <a class="dropdown-item" href="#">Tous les clients</a>
+                                <a class="dropdown-item" href="{{ absolute_url(path('client_index')) }}">Tous les clients</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown {% if(current_menu == 'monture') %}active{% endif %}">
@@ -134,9 +134,9 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ absolute_url(path('marque_index')) }}">Marques</a>
                                 <a class="dropdown-item" href="{{ absolute_url(path('monture_index')) }}">Montures</a>
-                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                                <!--<a class="dropdown-item" href="#">Fournisseurs</a>
                                 <a class="dropdown-item" href="#">Approvisionnements</a>
-                                <a class="dropdown-item" href="#">Destockage</a>
+                                <a class="dropdown-item" href="#">Destockage</a>-->
                             </div>
                         </li>
                         <li class="nav-item dropdown {% if (current_menu == 'verre') %}active{% endif %}">
@@ -144,9 +144,9 @@
                                aria-expanded="false"><span class="ti-pencil-alt"></span> Verres</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ absolute_url(path('typeverre_index')) }}">Types verres</a>
-                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                                <!--<a class="dropdown-item" href="#">Fournisseurs</a>
                                 <a class="dropdown-item" href="#">Approvisionnements</a>
-                                <a class="dropdown-item" href="#">Destockage</a>
+                                <a class="dropdown-item" href="#">Destockage</a>-->
                             </div>
                         </li>
                         <li class="nav-item dropdown {% if (current_menu == 'facture') %}active{% endif %}">
@@ -155,10 +155,10 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ absolute_url(path('facture_index')) }}">Ventes</a>
                                 <a class="dropdown-item" href="{{ absolute_url(path('versement_index')) }}">Versements</a>
-                                <a class="dropdown-item" href="#">Payment Invoice</a>
+                                <!--<a class="dropdown-item" href="#">Payment Invoice</a>-->
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <!--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-key"></span> Rendez-vous</a>
                             <div class="dropdown-menu">
@@ -166,14 +166,14 @@
                                 <a class="dropdown-item" href="rooms.html">Liste des RDV</a>
                                 <a class="dropdown-item" href="edit-room.html">Liste des livraisons</a>
                             </div>
-                        </li>
+                        </li>-->
                         <li class="nav-item dropdown {% if (current_menu == 'parametre') %} active {% endif %}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-file"></span> Paramètres</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ absolute_url(path('assurance_index')) }}">Assurances </a>
                                 <a class="dropdown-item" href="{{ absolute_url(path('traitement_index')) }}">Traitements</a>
-                                <a class="dropdown-item" href="#">Utilisateurs</a>
+                                <!--<a class="dropdown-item" href="#">Utilisateurs</a>-->
                             </div>
                         </li>
                     </ul>

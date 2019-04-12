@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impression</title>
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/main.css') }}">
+</head>
+<body>
+<button type="button" id="impression" class="btn btn-primary">Imprimer</button>
+<button type="button" id="fermeture" class="btn btn-danger pull-right">fermer</button>
+<div id="facture">
+	<table class="table">
+		<tbody>
+		<tr>
+			<td colspan="4" class="logo">
+				<img src="{{ asset('ressources/images/print/logo.png') }}" alt="">
+			</td>
+			<td colspan="4" class="logo">
+				<img src="{{ asset('ressources/images/print/slogan.png') }}" alt="">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" class="top-vide">ASSURANCE/SOCIETE: {{ facture.client.assurance.libelle }}</td>
+			<td colspan="3" class="top-vide">DATE: {{ facture.date|date('d-m-Y') }}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border">NOM ET PRENOMS</td>
+			<td colspan="6" class="right-border">{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border right-border">CONTACT</td>
+			<td colspan="6" class="right-border">{{ facture.client.tel }}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border right-border">TYPES DE VERRES</td>
+			<td colspan="6" class="right-border">{{ facture.typeverre.libelle }}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border right-border">TRAITEMENT</td>
+			<td colspan="6" class="right-border">{{ facture.traitement.libelle }}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border">OEIL DROIT</td>
+			<td colspan="3" class="left-border text-center"><span class="space">sph:{{ facture.odSph }}</span>  <span class="space">cyl:{{ facture.odCyl }}</span>  <span class="space">axe:{{ facture.odAxe }}</span>  <span class="space">add:{{ facture.odAdd }}</span></td>
+			<td colspan="1" class="left-border right-border text-center">Montant:</td>
+			<td colspan="2" class="right-border text-right">{{ facture.odMontant|number_format(0,'','.') }} FCFA</td>
+
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border">OEIL GAUCHE</td>
+			<td colspan="3" class="left-border text-center"><span class="space">sph:{{ facture.ogSph }}</span>  <span class="space">cyl:{{ facture.ogCyl }}</span>  <span class="space">axe:{{ facture.ogAxe }}</span>  <span class="space">add:{{ facture.ogAdd }}</td>
+			<td colspan="1" class="left-border right-border text-center">Montant:</td>
+			<td colspan="2" class="right-border text-right">{{ facture.ogMontant|number_format(0,'','.') }} FCFA</td>
+
+		</tr>
+		<tr>
+			<td colspan="2" class="left-border">TYPE DE MONTURE</td>
+			<td colspan="3" class="left-border text-center">PLAN ADD 1,00</td>
+			<td colspan="1" class="left-border right-border text-center">Montant:</td>
+			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+
+		</tr>
+		<tr>
+			<td colspan="2"></td>
+			<td colspan="4" class="left-border right-border text-right">MONTANT TOTAL</td>
+			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="top-vide"></td>
+			<td colspan="4" class="left-border right-border text-right">REMISE</td>
+			<td colspan="2" class="right-border text-right">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="top-vide"></td>
+			<td colspan="4" class="left-border right-border bottom-border text-right">NET A PAYER</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="top-vide"></td>
+			<td colspan="4" class="left-border right-border bottom-border text-right">PART ASSURANCE</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="top-vide"></td>
+			<td colspan="4" class="left-border right-border bottom-border text-right">ACCOMPTE</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="top-vide"></td>
+			<td colspan="4" class="left-border right-border bottom-border text-right">RESTE A PAYER</td>
+			<td colspan="2" class="right-border text-right bottom-border text-right font-bold">87 500 FCFA</td>
+		</tr>
+		<tr>
+			<td colspan="6" class="top-vide signature"></td>
+			<td colspan="2" class="top-vide signature">
+				Le responsable
+			</td>
+		</tr>
+		<tr>
+			<td colspan="8" class="footer top-vide">
+				<img src="{{ asset('ressources/images/print/footer.png') }}" alt="">
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="{{ asset('ressources/vendor/print/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('ressources/vendor/print/jquery-printme.js') }}" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        $("#impression").click(function(){
+            $("#facture").printMe({
+                "path" : ["{{ asset('ressources/vendor/print/visio.css') }}"]
+            });
+        });
+        $("#fermeture").click(function () {
+			window.close();
+        });
+    });
+</script>
+</body>
+</html>

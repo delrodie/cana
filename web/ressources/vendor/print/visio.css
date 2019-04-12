@@ -1,0 +1,97 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    -webkit-print-color-adjust: exact;
+    color: rgb(51, 51, 51);
+}
+
+th.blue {
+    background: #08C;
+    color: #FFF;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+}
+
+.table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
+    border-top: 0px none;
+}
+.table > thead > tr > th {
+    -webkit-print-color-adjust: exact;
+    vertical-align: bottom;
+    border-bottom: 2px solid rgb(221, 221, 221);
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    -webkit-print-color-adjust: exact;
+    padding: 8px;
+    line-height: 1.42857;
+    vertical-align: top;
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table > tbody > tr > td.top-vide {
+    border-top: 0px solid rgb(221, 221, 221);
+}
+
+.table > tbody > tr > td.left-border {
+    border-left: 1px solid rgb(221, 221, 221);
+}
+
+.table > tbody > tr > td.right-border {
+    border-right: 1px solid rgb(221, 221, 221);
+}
+
+.table > tbody > tr > td.bottom-border {
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.table > tbody > tr > td.text-center {
+    text-align: center;
+}
+
+.table > tbody > tr > td.text-right {
+    text-align: right;
+}
+
+.table > tbody > tr > td.font-bold {
+    font-weight: bold;
+}
+
+.table > tbody > tr > td.logo {
+    margin-bottom: 75px;
+    border-top: 0px solid rgb(221, 221, 221);
+    padding-bottom: 100px;
+}
+
+.table > tbody > tr > td.footer {
+    border-top: 0px solid rgb(221, 221, 221);
+    padding-top: 100px;
+    margin-top: 75px;
+}
+
+.table > tbody > tr > td.signature {
+    padding-top: 100px;
+}
+
+.table{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}

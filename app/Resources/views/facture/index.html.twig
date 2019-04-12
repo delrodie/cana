@@ -87,6 +87,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
+						<button type="button" id="basic">Imprimer</button>
                     </div>
                 </div>
             </div>
@@ -105,4 +106,13 @@
     <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/vendor/print/printThis.js')) }}"></script>
+    <script>
+        $('#basic').on("click", function () {
+            $('.table').printThis({
+                base: "https://jasonday.github.io/printThis/",
+                loadCSS: "{{ absolute_url(asset('ressources/css/styles.css')) }}"
+            });
+        });
+    </script>
 {% endblock %}
