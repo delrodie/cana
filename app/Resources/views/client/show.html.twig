@@ -25,7 +25,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="widget-area-2 proclinic-box-shadow">
-                    <h3 class="widget-title">{{ client.nom }} {{ client.prenoms }}</h3>
+                    <h3 class="widget-title">
+                        {{ client.nom }} {{ client.prenoms }}
+                        {% if client.statut %}
+                            <span class="badge badge-success">Activé</span>
+                        {% else %}
+                            <span class="badge badge-danger">Désactivé</span>
+                        {% endif %}
+                    </h3>
                     <div class="row mb-2">
                         <div class="col-md-12 text-right">
                             <a href="{{ absolute_url(path('client_index')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-list"></span> Liste</a>
@@ -42,85 +49,93 @@
                         </div>
                     {% endfor %}
                     <div class="row">
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_marque">Assurance</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" value="{{ client.assurance.libelle }}" readonly>
-                                </div>
-                            </div>
+                        <div class="col-md-2">
+                            <label for="">Assurance</label>
+                            <input type="text" class="form-control" value="{{ client.assurance.libelle }}" readonly>
                         </div>
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_reference">Nom</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" value="{{ client.nom }}" readonly>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="">Nom & prénoms</label>
+                            <input type="text" class="form-control" value="{{ client.nom }} {{ client.prenoms }}" readonly>
                         </div>
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_genre">Prenoms</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" value="{{ client.prenoms }}" readonly>
-                                </div>
-                            </div>
+                        <div class="col-md-1">
+                            <label for="">Genre</label>
+                            {% if (client.sexe == 'HOMME') %}
+                                <input type="text" class="form-control" value="M" readonly>
+                            {% else %}
+                                <input type="text" class="form-control" value="F" readonly>
+                            {% endif %}
                         </div>
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_montant">Statut</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" value="{{ client.sexe }}" readonly>
-                                </div>
-                            </div>
+                        <div class="col-md-2">
+                            <label for="">Localisation</label>
+                            <input type="text" class="form-control" value="{{ client.adresse }}" readonly>
                         </div>
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_stock">Localisation</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" value="{{ client.adresse }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-10">
-                            <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_stock">Contact</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" value="{{ client.tel }}" readonly>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" value="{{ client.cel }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-check col-md-10 mb-2">
-                            <div class="row">
-                                <div class="col-md-6"></div>
-                                <div class="col-md-4">
-                                    <div class="text-left">
-                                        <div class="custom-control custom-checkbox">
-                                            {% if client.statut %}
-                                                <span class="badge badge-success">Activé</span>
-                                            {% else %}
-                                                <span class="badge badge-danger">Désactivé</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-3">
+                            <label for="">Contact</label>
+                            <input type="text" class="form-control" value="{{ client.tel }} / {{ client.cel }}" readonly>
                         </div>
                     </div>
+                    <br>
                     <div class="form-group col-md-12 mb-5 text-right">
                         <a href="{{ absolute_url(path('client_edit', {'slug': client.slug})) }}" class="btn btn-primary btn-lg">Modifier</a>
+                        <a href="{{ absolute_url(path('facturation_new', {'client': client.slug})) }}" class="btn btn-primary btn-lg">Facturation</a>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-12">
                         {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce client ?");'}}) }}
                         <input type="submit" value="Supprimer" class="btn btn-danger btn-lg">
                         {{ form_end(delete_form) }}
                     </div>
                 </div>
+                {% if (factures) %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget-area-2 proclinic-box-shadow">
+                                <h3 class="widget-title">Liste des factures</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Numero</th>
+                                            <th>Dates</th>
+                                            <th>Montants</th>
+                                            <th>Acomptes</th>
+                                            <th>Assurances</th>
+                                            <th>RAP</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for facture in factures %}
+                                            <tr>
+                                                <td class="text-right">{{ loop.index }}</td>
+                                                <td>{{ facture.numero }}</td>
+                                                <td>{{ facture.date|date('d-m-Y') }}</td>
+                                                <td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+                                                <td class="text-right">{{ facture.acompte|number_format(0,'','.') }}</td>
+                                                <td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+                                                <td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ absolute_url(path('facture_show', {'slug': facture.slug})) }}" title="Voir details">
+                                                        <span class="ti-eye"></span>
+                                                    </a> |
+                                                    <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
+                                                        <span class="ti-pencil-alt"></span>
+                                                    </a>
+                                                    {% if (facture.rap) %}
+                                                        | <a href="{{ absolute_url(path('versement_new', {'facture': facture.slug})) }}" title="Regler la facture">
+                                                        <span class="ti-money"></span>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

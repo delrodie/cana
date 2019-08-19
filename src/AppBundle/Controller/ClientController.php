@@ -69,10 +69,14 @@ class ClientController extends Controller
      */
     public function showAction(Client $client)
     {
+        $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($client);
+
+        $factures = $em->getRepository("AppBundle:Facture")->findBy(['client'=>$client->getId()], ['id'=>'DESC']);
 
         return $this->render('client/show.html.twig', array(
             'client' => $client,
+            'factures' => $factures,
             'delete_form' => $deleteForm->createView(),
             'current_menu' => 'client'
         ));

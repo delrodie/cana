@@ -31,4 +31,15 @@ class ClientRepository extends \Doctrine\ORM\EntityRepository
                         ->getQuery()->getResult();
         }
     }
+
+    /**
+     * Le client concerné par la requête
+     */
+    public function findClient($slug)
+    {
+        return $this->createQueryBuilder('c')
+                    ->where('c.slug = :client')
+                    ->setParameter('client', $slug)
+            ;
+    }
 }
