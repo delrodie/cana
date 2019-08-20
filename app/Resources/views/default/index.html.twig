@@ -29,8 +29,8 @@
                     </div>
                     <div class="widget-right">
                         <h4 class="wiget-title">Clients</h4>
-                        <span class="numeric color-red">348</span>
-                        <p class="inc-dec mb-0"><span class="ti-angle-up"></span> +20% Increased</p>
+                        <span class="numeric color-red">{{ clientMois|length }}</span>
+                        <p class="inc-dec mb-0"><span class="ti-angle-up"></span> {{ clientTotal }}</p>
                     </div>
                 </div>
             </div>
@@ -69,76 +69,41 @@
             <!-- Widget Item -->
             <div class="col-md-12">
                 <div class="widget-area-2 proclinic-box-shadow">
-                    <h3 class="widget-title">Appointments</h3>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Clients</th>
-                                <th>Montures</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Rajesh</td>
-                                <td>Manoj Kumar</td>
-                                <td>Dental</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-success">Completed</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Riya</td>
-                                <td>Daniel </td>
-                                <td>Ortho</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-warning">Pending</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Siri</td>
-                                <td>Daniel </td>
-                                <td>Ortho</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-danger">Cancelled</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Rajesh</td>
-                                <td>Manoj Kumar</td>
-                                <td>Dental</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-success">Completed</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Riya</td>
-                                <td>Daniel </td>
-                                <td>Ortho</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-warning">Pending</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Siri</td>
-                                <td>Daniel </td>
-                                <td>Ortho</td>
-                                <td>12-10-2018</td>
-                                <td>
-                                    <span class="badge badge-danger">Cancelled</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <h3 class="widget-title">Les 10 dernières facturations</h3>
+                    {% if (factures) %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">CLIENTS</th>
+                                    <th class="text-center">MONTURES</th>
+                                    <th class="text-center">DATES</th>
+                                    <th class="text-center">STATUS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for facture in factures|slice(0,10) %}
+                                    <tr>
+                                        <td class="text-left">{{ loop.index }}</td>
+                                        <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+                                        <td>{{ facture.monture.marque.libelle }} {{ facture.monture.reference }}</td>
+                                        <td class="text-center">{{ facture.publieLe|date('d-m-Y h:i:s')}}</td>
+                                        <td class="text-center">
+                                            {% if (facture.rap) %}
+                                                <span class="badge badge-danger">Non soldée</span>
+                                            {% else %}
+                                                <span class="badge badge-success">Soldée</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        Aucune transaction pour l'instant
+                    {% endif %}
                 </div>
             </div>
             <!-- /Widget Item -->

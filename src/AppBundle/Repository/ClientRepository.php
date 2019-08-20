@@ -42,4 +42,17 @@ class ClientRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('client', $slug)
             ;
     }
+
+    /**
+     * Calcul du nombre total de client
+     * use DefaultController::index
+     */
+    public function findNombre()
+    {
+        return $this->createQueryBuilder('c')
+                    ->select('count(c.id)')
+                    ->where('c.statut = 1')
+                    ->getQuery()->getSingleScalarResult()
+            ;
+    }
 }

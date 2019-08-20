@@ -53,4 +53,24 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             return $code = '0001';
         }
     }
+
+    /**
+     * Calcul du nombre de client selon le mois
+     * use DefaultController::index
+     */
+    public function findNombreClient()
+    {
+        return $this->createQueryBuilder('f')
+                    ->select('count(f.id)')
+                    ->where('f.date >= :debut')
+                    ->andWhere('f.date <= :fin')
+                    ->groupBy('f.client')
+                    ->setParameters([
+                        'debut' => date('Y-m-01', time()),
+                        'fin' => date('Y-m-31', time())
+                    ])
+                    ->getQuery()->getScalarResult()
+
+            ;
+    }
 }
