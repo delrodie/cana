@@ -184,6 +184,13 @@ class Facture
     private $statut;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="impression", type="integer", nullable=true)
+     */
+    private $impression;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="factures")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
@@ -1063,5 +1070,29 @@ class Facture
     public function getVersements()
     {
         return $this->versements;
+    }
+
+    /**
+     * Set impression
+     *
+     * @param integer $impression
+     *
+     * @return Facture
+     */
+    public function setImpression($impression)
+    {
+        $this->impression = $impression;
+
+        return $this;
+    }
+
+    /**
+     * Get impression
+     *
+     * @return integer
+     */
+    public function getImpression()
+    {
+        return $this->impression;
     }
 }

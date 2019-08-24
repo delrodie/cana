@@ -278,6 +278,7 @@
                             <input type="hidden" name="RAP">
                             <input type="hidden" name="Assurance">
                             <input type="hidden" name="Accompte">
+                            <input type="hidden" name="ancienneMonture" value="{{ facture.monture.id }}">
                             <a href="{{ absolute_url(path('facture_index')) }}" class="btn btn-secondary btn-lg">Annuler</a>
                             <button type="submit" class="btn btn-primary btn-lg">Modifier</button>
                         </div>

@@ -48,7 +48,9 @@
                                 {% if loop.index == 1 %}
                                     Client: <strong>{{ versement.facture.client.nom }} {{ versement.facture.client.prenoms }}</strong>
                                     <br><br>
-                                    Contact : <strong>{{ versement.facture.client.cel }} / {{ versement.facture.client.tel }}</strong>
+                                    Contact : <strong>{{ versement.facture.client.cel }} {% if (versement.facture.client.tel) %}
+                                        / {{ versement.facture.client.tel }}
+                                    {% endif %}</strong>
                                 {% endif %}
                             {% endfor %}
                         </div>

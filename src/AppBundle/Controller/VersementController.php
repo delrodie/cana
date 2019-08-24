@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Versement;
 use AppBundle\Utils\Facturation;
+use AppBundle\Utils\Inventaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -114,6 +115,7 @@ class VersementController extends Controller
             'versement' => $versement,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'current_menu' => 'facture'
         ));
     }
 
@@ -123,18 +125,25 @@ class VersementController extends Controller
      * @Route("/{id}", name="versement_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Versement $versement)
+    public function deleteAction(Request $request, Versement $versement, Inventaire $inventaire)
     {
         $form = $this->createDeleteForm($versement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $facture = $em->getRepository("AppBundle:Facture")->findOneBy(['id'=>$versement->getId()]);
             $em->remove($versement);
             $em->flush();
+            if ($inventaire->approvisionnement($facture->getMonture()->getId())){
+                $em->remove($facture);
+                $em->flush();
+            }else{
+                return $this->redirectToRoute('facture_edit',['id'=> $facture->getId()]);
+            }
         }
 
-        return $this->redirectToRoute('versement_index');
+        return $this->redirectToRoute('facture_index');
     }
 
     /**

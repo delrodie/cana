@@ -62,6 +62,7 @@ class FactureController extends Controller
             $accompte = $request->get('Accompte'); $facture->setAcompte($accompte);
             $code = $facturation->code();
             $facture->setNumero($code); //dump($facture);die();
+            $facture->setStatut(1);
             $em->persist($facture);
             $em->flush();
 
@@ -101,11 +102,12 @@ class FactureController extends Controller
      * @Route("/{id}/edit", name="facture_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Facture $facture, Facturation $facturation)
+    public function editAction(Request $request, Facture $facture, Facturation $facturation, Inventaire $inventaire)
     {
         $deleteForm = $this->createDeleteForm($facture);
         $editForm = $this->createForm('AppBundle\Form\FactureType', $facture);
         $editForm->handleRequest($request);
+
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // Generation du code de la facture
@@ -115,14 +117,22 @@ class FactureController extends Controller
             $facture->setOgAdd($request->get('ogAdd')); $facture->setOgAxe($request->get('ogAxe'));
             // Elimination des espace et point dans les montants saisis
             //$mt = $facture->getMontantHT(); $mtt = $facture->getMontantTTC(); $rap = $facture->getRap();
-            $mth = $request->get('mtHT'); $facture->setMontantHT($mth);
-            $mtc = $request->get('mtTTC'); $facture->setMontantTTC($mtc);
-            $rap = $request->get('RAP'); $facture->setRap($rap);
-            $assurance = $request->get('Assurance'); $facture->setPartAssurance($assurance);
-            $accompte = $request->get('Accompte'); $facture->setAcompte($accompte);
-            $code = $facturation->code();
-            $facture->setNumero($code); //dump($facture);die();
+            $mth = $request->get('mtHT'); if ($mth) $facture->setMontantHT($mth);
+            $mtc = $request->get('mtTTC'); if ($mtc) $facture->setMontantTTC($mtc);
+            $rap = $request->get('RAP'); if ($rap) $facture->setRap($rap);
+            $assurance = $request->get('Assurance'); if ($assurance) $facture->setPartAssurance($assurance);
+            $accompte = $request->get('Accompte'); if ($accompte) $facture->setAcompte($accompte);
+
+            // Recuperation de l'ancienne monture
+            $ancienneMonture = $request->get('ancienneMonture');
+
             $this->getDoctrine()->getManager()->flush();
+
+            $nouvelleMonture = $facture->getMonture()->getId();
+            if ($ancienneMonture != $nouvelleMonture){
+                $inventaire->destockage($nouvelleMonture);
+                $inventaire->approvisionnement($ancienneMonture);
+            }
 
             return $this->redirectToRoute('facture_show', array('slug' => $facture->getSlug()));
         }
@@ -154,6 +164,10 @@ class FactureController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $versement = $em->getRepository("AppBundle:Versement")->findOneBy(['facture'=>$facture->getId()]);
+            if ($versement){
+                return $this->redirectToRoute('versement_edit',['id'=>$versement->getId()]);
+            }
             if ($inventaire->approvisionnement($facture->getMonture()->getId())){
                 $em->remove($facture);
                 $em->flush();

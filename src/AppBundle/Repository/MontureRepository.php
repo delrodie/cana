@@ -29,4 +29,27 @@ class MontureRepository extends \Doctrine\ORM\EntityRepository
                 ;
         }
     }
+
+    /**
+     * Nombre de monture en stock
+     * use DefaultController::index
+     */
+    public function findNombre($statut = null)
+    {
+        // Si le statut est nul alors le nombre de monture épuisées
+        // sinon le nombre total de montures disponibles
+        if ($statut){
+            return $this->createQueryBuilder('m')
+                        ->select('SUM(m.stock)')
+                        ->where('m.statut = 1')
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('m')
+                        ->select('count(m.id)')
+                        ->where('m.stock = 0')
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
 }

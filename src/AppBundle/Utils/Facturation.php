@@ -79,5 +79,16 @@ class Facturation
         }
     }
 
+    /**
+     * Incrementation du nombre d'impresion de la facture
+     */
+    public function impression($factureSlug)
+    {
+        $facture = $this->em->getRepository("AppBundle:Facture")->findOneBy(['slug'=>$factureSlug]);
+        $facture->setImpression($facture->getImpression()+1);
+        $this->em->flush();
+
+        return true;
+    }
 
 }

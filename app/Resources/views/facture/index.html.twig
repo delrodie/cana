@@ -73,10 +73,18 @@
                                     <td class="text-center">
                                         <a href="{{ absolute_url(path('facture_show', {'slug': facture.slug})) }}" title="Voir details">
                                             <span class="ti-eye"></span>
-                                        </a> |
-                                        <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
-                                            <span class="ti-pencil-alt"></span>
                                         </a>
+                                        {% if (facture.impression) %}
+                                           {% if is_granted("ROLE_ADMIN") %} |
+                                               <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
+                                                   <span class="ti-pencil-alt"></span>
+                                               </a>
+                                           {% endif %}
+                                        {% else %} |
+                                            <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
+                                                <span class="ti-pencil-alt"></span>
+                                            </a>
+                                        {% endif %}
                                         {% if (facture.rap) %}
                                             | <a href="{{ absolute_url(path('versement_new', {'facture': facture.slug})) }}" title="Regler la facture">
                                                 <span class="ti-money"></span>

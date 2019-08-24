@@ -4,7 +4,7 @@
     <div class="container mt-0">
         <div class="row breadcrumb-bar">
             <div class="col-md-6">
-                <h3 class="block-title">Statistiques du mois encours</h3>
+                <h3 class="block-title">Statistiques</h3>
             </div>
             <div class="col-md-6">
                 <ol class="breadcrumb">
@@ -39,12 +39,12 @@
             <div class="col-md-4">
                 <div class="widget-area proclinic-box-shadow color-green">
                     <div class="widget-left">
-                        <span class="ti-bar-chart"></span>
+                        <span class="ti-money"></span>
                     </div>
                     <div class="widget-right">
-                        <h4 class="wiget-title">Rendez-vous</h4>
-                        <span class="numeric color-green">1585</span>
-                        <p class="inc-dec mb-0"><span class="ti-angle-down"></span> -15% Decreased</p>
+                        <h4 class="wiget-title">Factures non soldées</h4>
+                        <span class="numeric color-green">{{ facture_non_solde}}</span>
+                        <p class="inc-dec mb-0"><span class="ti-angle-down"></span> {{ facture_solde}} factures soldées</p>
                     </div>
                 </div>
             </div>
@@ -53,12 +53,12 @@
             <div class="col-md-4">
                 <div class="widget-area proclinic-box-shadow color-yellow">
                     <div class="widget-left">
-                        <span class="ti-money"></span>
+                        <span class="ti-ticket"></span>
                     </div>
                     <div class="widget-right">
-                        <h4 class="wiget-title">Montures en stock</h4>
-                        <span class="numeric color-yellow">$7300</span>
-                        <p class="inc-dec mb-0"><span class="ti-angle-up"></span> +10% Increased</p>
+                        <h4 class="wiget-title">Montures disponibles</h4>
+                        <span class="numeric color-yellow">{{ nombre_monture }}</span>
+                        <p class="inc-dec mb-0"><span class="ti-angle-down"></span> {{ monture_epuise}} monture(s) épuisée(s)</p>
                     </div>
                 </div>
             </div>

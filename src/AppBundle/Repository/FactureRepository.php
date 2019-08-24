@@ -73,4 +73,27 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
 
             ;
     }
+
+    /**
+     * Determination du nombre de facture impayées
+     * use DefaultController::index
+     */
+    public function findNombreFacture($solde=null)
+    {
+        if ($solde){
+            return $this->createQueryBuilder('f')
+                        ->select('count(f.id)')
+                        ->where('f.rap = 0')
+                        ->andWhere('f.statut = 1')
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('f')
+                        ->select('count(f.id)')
+                        ->where('f.rap <> 0')
+                        ->andWhere('f.statut = 1')
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
 }
