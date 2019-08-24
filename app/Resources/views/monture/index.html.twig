@@ -70,7 +70,9 @@
                                 <th class="text-center">Marques</th>
                                 <th class="text-center">References</th>
                                 <th class="text-center">Genres</th>
-                                <th class="text-center">Stocks</th>
+                                <th class="text-center">Genres</th>
+                                <th class="text-center">Col</th>
+                                <th class="text-center">tailles</th>
                                 <th class="text-center">Prix</th>
                                 <th class="text-center">statuts</th>
                                 <th class="text-center">Actions</th>
@@ -83,6 +85,8 @@
                                     <td>{{ monture.marque.libelle }}</td>
                                     <td>{{ monture.reference }}</td>
                                     <td class="text-center">{{ monture.genre }}</td>
+                                    <td class="text-center">{{ monture.col }}</td>
+                                    <td class="text-center">{{ monture.taille }}</td>
                                     <td class="text-center">{{ monture.stock }}</td>
                                     <td class="text-right">{{ monture.montant|number_format(0, ' ', '.') }}</td>
                                     <td>

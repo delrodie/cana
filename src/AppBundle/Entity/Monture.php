@@ -51,6 +51,20 @@ class Monture
     private $stock;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="col", type="string", length=255, nullable=true)
+     */
+    private $col;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="taille", type="string", length=255, nullable=true)
+     */
+    private $taille;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="statut", type="boolean", nullable=true)
@@ -422,5 +436,53 @@ class Monture
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Set col
+     *
+     * @param string $col
+     *
+     * @return Monture
+     */
+    public function setCol($col)
+    {
+        $this->col = $col;
+
+        return $this;
+    }
+
+    /**
+     * Get col
+     *
+     * @return string
+     */
+    public function getCol()
+    {
+        return $this->col;
+    }
+
+    /**
+     * Set taille
+     *
+     * @param string $taille
+     *
+     * @return Monture
+     */
+    public function setTaille($taille)
+    {
+        $this->taille = $taille;
+
+        return $this;
+    }
+
+    /**
+     * Get taille
+     *
+     * @return string
+     */
+    public function getTaille()
+    {
+        return $this->taille;
     }
 }

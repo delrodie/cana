@@ -22,6 +22,12 @@ class MontureType extends AbstractType
             ->add('reference', TextType::class, [
                 'attr' => ['class'=> 'form-control', 'placeholder'=>'La reference de la monture']
             ])
+            ->add('col', TextType::class, [
+                'attr' => ['class'=> 'form-control', 'placeholder'=>'Col de la monture'], 'required'=>false
+            ])
+            ->add('taille', TextType::class, [
+                'attr' => ['class'=> 'form-control', 'placeholder'=>'La taille de la monture'], 'required'=>false
+            ])
             ->add('montant', IntegerType::class,[
                 'attr' => ['class'=> 'form-control', 'placeholder'=> 'Le montant de la monture']
             ])
