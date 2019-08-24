@@ -26,4 +26,22 @@ class PdfController extends Controller
             'facture' => $facture
         ]);
     }
+
+    /**
+     * @Route("/caisse/{debut}/{fin}", name="pdf_caisse")
+     * @Method("GET")
+     */
+    public function caisseAction($debut,$fin)
+    {
+        $em= $this->getDoctrine()->getManager(); //dump($debut); dump($fin);
+        $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+        //dump($factures);die();
+
+        return $this->render('default/imprim_caisse.html.twig',[
+            'factures' => $factures,
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'current_menu' => 'dashboard'
+        ]);
+    }
 }

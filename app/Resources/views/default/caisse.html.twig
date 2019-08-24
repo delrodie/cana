@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Recherche {% endblock %}
+
+{% block body %}
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Recherche</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Recherche</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+
+                    </div>
+                </div>
+                <div class="widget-area-2 proclinic-box-shadow">
+                    {% if (date_debut) %}
+                        <h3 class="widget-title mb-5">Point caisse du <strong>{{ date_debut }}</strong> au <strong>{{ date_fin }}</strong></h3>
+                    {% else %}
+                        <h3 class="widget-title mb-5">Point gloabl de la caisse</h3>
+                    {% endif %}
+                    <form action="">
+                        <div class="row mb-5">
+                                <div class="col-md-1">
+                                    <label for="">Periode </label>
+                                </div>
+                                <div class="col-md-3" id="caisse-datepicker">
+                                    <div class="input-group date">
+                                        <input type="text" name="date_debut" class="form-control" autocomplete="off">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" id="caisse-datepicker">
+                                    <div class="input-group date">
+                                        <input type="text" name="date_fin" class="form-control" autocomplete="off">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" class="btn btn-primary" value="Rechercher">
+                                </div>
+                        </div>
+                    </form>
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+                            <strong>{{ message }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    {% if (factures) %}
+                    <div class="table-responsive mb-3">
+                            <table id="tableId" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Numero</th>
+                                    <th class="text-center">Assurances</th>
+                                    <th class="text-center">Nom et Prenoms</th>
+                                    <th class="text-center">Montants</th>
+                                    <th class="text-center">Acompte</th>
+                                    <th class="text-center">Assurance</th>
+                                    <th class="text-center">RAP</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set mtGlobal = 0 %}{% set acompteGlobal = 0 %}{% set assuranceGlobal = 0 %}{% set rapGlobal = 0 %}
+                                {% for facture in factures %}
+                                    <tr>
+                                        <td class="text-right">{{ loop.index }}</td>
+                                        <td>{{ facture.date|date('d-m-Y') }}</td>
+                                        <td>{{ facture.numero }}</td>
+                                        <td>{{ facture.client.assurance.libelle }}</td>
+                                        <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+                                        <td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.acompte|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
+                                    </tr>
+                                    {% set mtGlobal = mtGlobal+facture.montantTTC %}
+                                    {% set acompteGlobal = acompteGlobal+facture.acompte %}
+                                    {% set assuranceGlobal = assuranceGlobal+facture.partAssurance %}
+                                    {% set rapGlobal = rapGlobal+facture.rap %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                    </div>
+                        <div class="row mt-5 ">
+                            <div class="col-md-9 text-right">
+                                Montant Total:
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <strong>{{ mtGlobal|number_format(0,'','.') }}</strong>
+                            </div>
+                            <div class="col-md-1 text-left">
+                                F CFA
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-9 text-right">
+                                Total Acompte:
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <strong>{{ acompteGlobal|number_format(0,'','.') }}</strong>
+                            </div>
+                            <div class="col-md-1 text-left">
+                                F CFA
+                            </div>
+                        </div>
+                        <div class="row mt-1 ">
+                            <div class="col-md-9 text-right">
+                                Total part assurance:
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <strong>{{ assuranceGlobal|number_format(0,'','.') }}</strong>
+                            </div>
+                            <div class="col-md-1 text-left">
+                                F CFA
+                            </div>
+                        </div>
+                        <div class="row mt-1 mb-5 ">
+                            <div class="col-md-9 text-right">
+                                Total reste à payer:
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <strong>{{ rapGlobal|number_format(0,'','.') }}</strong>
+                            </div>
+                            <div class="col-md-1 text-left">
+                                F CFA
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-5 text-center">
+                                {% set debut = factures|last %} {% set fin = factures|first %}
+                                <a href="{{ absolute_url(path('pdf_caisse', {'debut': debut.date , 'fin': fin.date})) }}" class="btn btn-primary btn-lg mt-3 mb-0" target="_blank"><span class="ti-printer"></span> Imprimer</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="mb-5 text-center">
+                            <em>Aucun resultat</em>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/vendor/print/printThis.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/vendor/bootstrap-datepicker.fr.min.js')) }}"></script>
+    <script>
+        $('#basic').on("click", function () {
+            $('.table').printThis({
+                base: "https://jasonday.github.io/printThis/",
+                loadCSS: "{{ absolute_url(asset('ressources/css/styles.css')) }}"
+            });
+        });
+        $('#caisse-datepicker input').datepicker({
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "fr",
+            multidate: false,
+            autoclose: true
+        });
+    </script>
+{% endblock %}

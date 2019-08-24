@@ -115,4 +115,53 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()->getResult()
             ;
     }
+
+    /**
+     * Liste des factures selon la periode
+     * use RechercheController::caisse
+     */
+    public function findCaissePeriode($debut = null, $fin = null)
+    {
+        if ($debut){
+            if ($fin){
+                return $this->createQueryBuilder('f')
+                            ->where('f.statut = 1')
+                            -> andWhere('f.date >= :debut')
+                            ->andWhere('f.date <= :fin')
+                            ->orderBy('f.date', 'DESC')
+                            ->setParameters([
+                                'debut' => $debut,
+                                'fin' => $fin
+                            ])
+                            ->getQuery()->getResult()
+                    ;
+            }else{
+                return $this->createQueryBuilder('f')
+                            ->where('f.statut = 1')
+                            ->andWhere('f.date >= :debut')
+                            ->andWhere('f.date <= :fin')
+                            ->orderBy('f.date', 'DESC')
+                            ->setParameters([
+                                'debut' => $debut,
+                                'fin' => date('Y-m-d', time())
+                            ])
+                            ->getQuery()->getResult()
+                            ;
+            }
+        }elseif ($fin){
+            return $this->createQueryBuilder('f')
+                        ->where('f.statut')
+                        ->andWhere('f.date <= :fin')
+                        ->orderBy('f.date', 'DESC')
+                        ->setParameter('fin', $fin)
+                        ->getQuery()->getResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('f')
+                        ->where('f.statut = 1')
+                        ->orderBy('f.date', 'DESC')
+                        ->getQuery()->getResult()
+                ;
+        }
+    }
 }

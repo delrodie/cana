@@ -28,4 +28,26 @@ class RechercheController extends Controller
             'current_menu' => 'dashboard'
         ]);
     }
+
+    /**
+     * point caisse selon la periode
+     *
+     * @Route("/caisse", name="recherche_caisse")
+     * @Method({"GET","POST"})
+     */
+    public function caisseAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $debut = $request->get('date_debut');
+        $fin = $request->get('date_fin');
+
+        $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+
+        return $this->render('default/caisse.html.twig',[
+            'factures' => $factures,
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'current_menu' => 'dashboard'
+        ]);
+    }
 }

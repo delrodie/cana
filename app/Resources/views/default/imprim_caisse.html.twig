@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impression</title>
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/main.css') }}">
+</head>
+<body>
+<button type="button" id="impression" class="btn btn-primary">Imprimer</button>
+<button type="button" id="fermeture" class="btn btn-danger pull-right">fermer</button>
+<div id="facture">
+	<table class="table">
+		<tbody>
+		<tr>
+			<td colspan="5" class="logo">
+				<img src="{{ asset('ressources/images/print/logo.png') }}" alt="">
+			</td>
+			<td colspan="4" class="logo">
+				<img src="{{ asset('ressources/images/print/slogan.png') }}" alt="">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Id
+			</td>
+			<td>
+				Dates
+			</td>
+			<td colspan="3">
+				Noms & Prenoms
+			</td>
+			<td>
+				Montants
+			</td>
+			<td>
+				Acomptes
+			</td>
+			<td>
+				Assurance
+			</td>
+			<td>
+				RAP
+			</td>
+		</tr>
+		{% set mtGlobal = 0 %}{% set acompteGlobal = 0 %}{% set assuranceGlobal = 0 %}{% set rapGlobal = 0 %}
+		{% for facture in factures %}
+			<tr>
+				<td class="text-right">{{ loop.index }}</td>
+				<td>{{ facture.date|date('d-m-Y') }}</td>
+				<td colspan="3">{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+				<td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+				<td class="text-right">{{ facture.acompte|number_format(0,'','.') }}</td>
+				<td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+				<td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
+			</tr>
+			{% set mtGlobal = mtGlobal+facture.montantTTC %}
+			{% set acompteGlobal = acompteGlobal+facture.acompte %}
+			{% set assuranceGlobal = assuranceGlobal+facture.partAssurance %}
+			{% set rapGlobal = rapGlobal+facture.rap %}
+		{% endfor %}
+		<tr>
+			<td colspan="5" class="text-right">TOTAUX</td>
+			<td class="text-right font-bold">{{ mtGlobal|number_format(0,'','.') }}</td>
+			<td class="text-right font-bold">{{ acompteGlobal|number_format(0,'','.') }}</td>
+			<td class="text-right font-bold">{{ assuranceGlobal|number_format(0,'','.') }}</td>
+			<td class="text-right font-bold">{{ rapGlobal|number_format(0,'','.') }}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="{{ asset('ressources/vendor/print/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('ressources/vendor/print/jquery-printme.js') }}" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        $("#impression").click(function(){
+            $("#facture").printMe({
+                "path" : ["{{ asset('ressources/vendor/print/visio.css') }}"]
+            });
+        });
+        $("#fermeture").click(function () {
+			window.close();
+        });
+    });
+</script>
+</body>
+</html>
