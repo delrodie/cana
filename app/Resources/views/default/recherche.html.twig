@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Recherche {% endblock %}
+
+{% block body %}
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Recherche</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Recherche</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+
+                    </div>
+                </div>
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title mb-5">resultats de la recherche relative à "<strong>{{ search }}</strong>"</h3>
+
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+                            <strong>{{ message }} </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <div class="table-responsive mb-3">
+                        {% if (factures) %}
+                            <table id="tableId" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Numero</th>
+                                    <th class="text-center">Assurances</th>
+                                    <th class="text-center">Nom et Prenoms</th>
+                                    <th class="text-center">Montants</th>
+                                    <th class="text-center">Acompte</th>
+                                    <th class="text-center">Assurance</th>
+                                    <th class="text-center">RAP</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for facture in factures %}
+                                    <tr>
+                                        <td class="text-right">{{ loop.index }}</td>
+                                        <td>{{ facture.numero }}</td>
+                                        <td>{{ facture.client.assurance.libelle }}</td>
+                                        <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+                                        <td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.acompte|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+                                        <td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ absolute_url(path('facture_show', {'slug': facture.slug})) }}" title="Voir details">
+                                                <span class="ti-eye"></span>
+                                            </a>
+                                            {% if (facture.impression) %}
+                                                {% if is_granted("ROLE_ADMIN") %} |
+                                                    <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
+                                                        <span class="ti-pencil-alt"></span>
+                                                    </a>
+                                                {% endif %}
+                                            {% else %} |
+                                                <a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" title="Modifier">
+                                                    <span class="ti-pencil-alt"></span>
+                                                </a>
+                                            {% endif %}
+                                            {% if (facture.rap) %}
+                                                | <a href="{{ absolute_url(path('versement_new', {'facture': facture.slug})) }}" title="Regler la facture">
+                                                <span class="ti-money"></span>
+                                            </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="mb-5 text-center">
+                                <em>Aucun resultat</em>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/vendor/print/printThis.js')) }}"></script>
+    <script>
+        $('#basic').on("click", function () {
+            $('.table').printThis({
+                base: "https://jasonday.github.io/printThis/",
+                loadCSS: "{{ absolute_url(asset('ressources/css/styles.css')) }}"
+            });
+        });
+    </script>
+{% endblock %}

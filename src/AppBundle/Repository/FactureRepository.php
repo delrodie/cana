@@ -96,4 +96,23 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
                 ;
         }
     }
+
+    /**
+     * Recherche de la facture ou du nom
+     * use RechercheController::index
+     */
+    public function recherche($search)
+    {
+        return $this->createQueryBuilder('f')
+                    ->leftJoin('f.monture', 'm')
+                    ->leftJoin('f.client', 'c')
+                    ->where('f.numero LIKE :search')
+                    ->orWhere('m.reference LIKE :search')
+                    ->orWhere('c.nom LIKE :search')
+                    ->orWhere('c.prenoms LIKE :search')
+                    ->orWhere('f.montantTTC LIKE :search')
+                    ->setParameter('search', '%'.$search.'%')
+                    ->getQuery()->getResult()
+            ;
+    }
 }

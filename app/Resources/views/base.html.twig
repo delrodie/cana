@@ -55,14 +55,14 @@
                             <div class="modal-dialog modal-lorvens">
                                 <div class="modal-content proclinic-box-shadow2">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Rechercher Client/</h5>
+                                        <h5 class="modal-title">Rechercher/</h5>
                                         <span class="ti-close" data-dismiss="modal" aria-label="Close">
 											</span>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form method="post" action="{{ path('recherche') }}">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="search-term" placeholder="Rechercher ici">
+                                                <input type="text" class="form-control" name="search" id="search-term" placeholder="Rechercher ici">
                                                 <button type="button" class="btn btn-lorvens proclinic-bg">
                                                     <span class="ti-location-arrow"></span> Rechercher</button>
                                             </div>
