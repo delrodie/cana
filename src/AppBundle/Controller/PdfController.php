@@ -21,9 +21,11 @@ class PdfController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $facture = $em->getRepository('AppBundle:Facture')->findOneBy(array('slug'=>$slug));
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']); //dump($base);die();
         if ($facture) $facturation->impression($slug);
         return $this->render('default/facture.html.twig',[
-            'facture' => $facture
+            'facture' => $facture,
+            'base' => $base
         ]);
     }
 

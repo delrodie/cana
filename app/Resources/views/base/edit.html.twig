@@ -1,21 +1,96 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des bases {% endblock %}
 
 {% block body %}
-    <h1>Base edit</h1>
+    <div class="container mt-0">
+        <div class="row breadcrumb-bar">
+            <div class="col-md-6">
+                <h3 class="block-title">Gestion des bases</h3>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <span class="ti-home"></span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">Parametres</li>
+                    <li class="breadcrumb-item active">bases</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Listes des bases</h3>
+                    {% for base in bases %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="{{ vich_uploader_asset(base, 'imageFile') }}" alt="logo">
+                            </div>
+                            <div class="col-md-12">
+                                {{ base.libelle }}
+                            </div>
+                            <div class="col-md-12">
+                                {{ base.description|raw }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{ path('base_edit', {'id': base.id}) }}" class="btn btn-primary">Modifier</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('base_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <div class="col-md-6">
+                <div class="widget-area-2 proclinic-box-shadow">
+                    <h3 class="widget-title">Creer une bases</h3>
+                    {{ form_start(edit_form) }}
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="">Logo</label>
+                            {{ form_widget(edit_form.imageFile) }}
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="appbundle_base_libelle">Slogan</label>
+                            {{ form_widget(edit_form.libelle) }}
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="appbundle_base_libelle">Localisation et contact</label>
+                            {{ form_widget(edit_form.description) }}
+                        </div>
+                        <div class="form-check col-md-12 mb-2">
+                            <div class="text-left">
+                                <div class="custom-control custom-checkbox">
+                                    {{ form_widget(edit_form.statut) }}
+                                    <label class="custom-control-label" for="appbundle_base_statut">Activé</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 mb-5 text-right">
+                            <button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+                        </div>
+                    </div>
+                    {{ form_end(edit_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
 {% endblock %}

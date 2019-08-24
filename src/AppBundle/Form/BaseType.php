@@ -25,7 +25,7 @@ class BaseType extends AbstractType
                   'attr'  => array(
                       'class' => 'form-control',
                       'autocomplete'  => 'off',
-                      'placeholder' => 'Titre de la page'
+                      'placeholder' => 'Slogan'
                   )
             ))
             ->add('description', CKEditorType::class)

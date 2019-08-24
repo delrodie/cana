@@ -14,9 +14,12 @@
 		<tr>
 			<td colspan="4" class="logo">
 				<img src="{{ asset('ressources/images/print/logo.png') }}" alt="">
+				<div class="" style="font-weight: bold">
+					{{ base.libelle }}
+				</div>
 			</td>
 			<td colspan="4" class="logo">
-				<img src="{{ asset('ressources/images/print/slogan.png') }}" alt="">
+				{{ base.description|raw}}
 			</td>
 		</tr>
 		<tr>

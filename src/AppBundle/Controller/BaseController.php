@@ -18,16 +18,30 @@ class BaseController extends Controller
      * Lists all base entities.
      *
      * @Route("/", name="base_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $base = new Base();
+        $form = $this->createForm('AppBundle\Form\BaseType', $base);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($base);
+            $em->flush();
+
+            return $this->redirectToRoute('base_index');
+        }
 
         $bases = $em->getRepository('AppBundle:Base')->findAll();
 
         return $this->render('base/index.html.twig', array(
             'bases' => $bases,
+            'base' => $base,
+            'form' => $form->createView(),
+            'current_menu' => 'parametre'
         ));
     }
 
@@ -88,11 +102,16 @@ class BaseController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('base_edit', array('id' => $base->getId()));
+            return $this->redirectToRoute('base_index');
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $bases = $em->getRepository('AppBundle:Base')->findAll();
 
         return $this->render('base/edit.html.twig', array(
             'base' => $base,
+            'bases' => $bases,
+            'current_menu' => 'parametre',
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
