@@ -33,4 +33,5 @@ class DefaultController extends Controller
             'facture_non_solde' => $factureNonSoldee,
         ]);
     }
+
 }
