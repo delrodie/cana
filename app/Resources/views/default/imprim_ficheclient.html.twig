@@ -12,41 +12,98 @@
 	<table class="table">
 		<tbody>
 		<tr>
-			<td colspan="4" class="logo">
-				<img src="{{ vich_uploader_asset(base, 'imageFile') }}" alt="logo">
+			<td colspan="6" class="logo">
+				<img src="{{ asset('uploads/'~base.imageName) }}" alt="">
 			</td>
 			<td colspan="7" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
 				{{ base.libelle}}
 			</td>
 		</tr>
 		<tr>
-			<td colspan="11" class="text-center top-vide"><strong><u>FICHE CLIENT</u></strong></td>
+			<td colspan="13" class="text-center top-vide"><strong><u>FICHE CLIENT</u></strong></td>
 		</tr>
 		<tr>
-			<td colspan="2" class="left-border"><strong>ASSURANCE</strong></td>
+			<td colspan="3" class="left-border"><strong>ASSURANCE</strong></td>
 			<td colspan="6" class="left-border">{{ facture.client.assurance.libelle }}</td>
-			<td colspan="1" class="left-border"><strong>Date</strong></td>
+			<td colspan="2" class="left-border"><strong>Date</strong></td>
 			<td colspan="2" class="left-border right-border">{{ facture.date|date("d-m-Y") }}</td>
 		</tr>
 		<tr>
-			<td colspan="2" class="left-border"><strong>NOM & PRENOMS</strong></td>
+			<td colspan="3" class="left-border"><strong>NOM & PRENOMS</strong></td>
 			<td colspan="6" class="left-border">{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
-			<td colspan="1" class="left-border"><strong>Contact</strong></td>
+			<td colspan="2" class="left-border"><strong>Contact</strong></td>
 			<td colspan="2" class="left-border right-border">{{ facture.client.cel }} {% if facture.client.tel %} / {{ facture.client.tel }}{% endif %}</td>
 		</tr>
 		<tr>
-			<td colspan="2" class="left-border"><strong>TYPE DE VERRES</strong></td>
+			<td colspan="3" class="left-border"><strong>TYPE DE VERRES</strong></td>
 			<td colspan="4" class="left-border">{{ facture.typeverre.libelle }}</td>
-			<td colspan="2" class="left-border"><strong>Traitement</strong></td>
+			<td colspan="3" class="left-border"><strong>Traitement</strong></td>
 			<td colspan="3" class="left-border right-border">{{ facture.traitement.libelle }}</td>
 		</tr>
 		<tr>
 			<td colspan="1" class="left-border"><strong>OD SP</strong></td>
-			<td colspan="4" class="left-border">{{ facture.typeverre.libelle }}</td>
-			<td colspan="2" class="left-border"><strong>Traitement</strong></td>
-			<td colspan="3" class="left-border right-border">{{ facture.traitement.libelle }}</td>
+			<td colspan="1" class="left-border">{{ facture.odSph }}</td>
+			<td colspan="1" class="left-border"><strong>OD CYL</strong></td>
+			<td colspan="1" class="left-border">{{ facture.odCyl }}</td>
+			<td colspan="1" class="left-border"><strong>OD Axe</strong></td>
+			<td colspan="1" class="left-border">{{ facture.odAxe }}</td>
+			<td colspan="1" class="left-border"><strong>OD Add</strong></td>
+			<td colspan="1" class="left-border">{{ facture.odAdd }}</td>
+			<td colspan="1" class="left-border"><strong>QTE</strong></td>
+			<td colspan="1" class="left-border">{{ facture.odQte }}</td>
+			<td colspan="1" class="left-border"><strong>Montant</strong></td>
+			<td colspan="2" class="left-border right-border">{{ facture.odMontant|number_format(0,'','.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="1" class="left-border"><strong>OG SP</strong></td>
+			<td colspan="1" class="left-border">{{ facture.ogSph }}</td>
+			<td colspan="1" class="left-border"><strong>OG CYL</strong></td>
+			<td colspan="1" class="left-border">{{ facture.ogCyl }}</td>
+			<td colspan="1" class="left-border"><strong>OG Axe</strong></td>
+			<td colspan="1" class="left-border">{{ facture.ogAxe }}</td>
+			<td colspan="1" class="left-border"><strong>OG Add</strong></td>
+			<td colspan="1" class="left-border">{{ facture.ogAdd }}</td>
+			<td colspan="1" class="left-border"><strong>QTE</strong></td>
+			<td colspan="1" class="left-border">{{ facture.ogQte }}</td>
+			<td colspan="1" class="left-border"><strong>Montant</strong></td>
+			<td colspan="2" class="left-border right-border">{{ facture.ogMontant|number_format(0,'','.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="left-border"><strong>Monture</strong></td>
+			<td colspan="6" class="left-border">{{ facture.monture.marque.libelle }} {{ facture.monture.reference }}</td>
+			<td colspan="2" class="left-border"><strong>Montant</strong></td>
+			<td colspan="2" class="left-border right-border">{{ facture.monturePrix|number_format(0,'','.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="left-border"><strong>Montant total</strong></td>
+			<td colspan="2" class="left-border">{{ facture.montantHT|number_format(0,'','.') }}</td>
+			<td colspan="2" class="left-border"><strong>Remise</strong></td>
+			<td colspan="2" class="left-border">{{ facture.remise|number_format(0,'','.') }}</td>
+			<td colspan="2" class="left-border"><strong>Net à payer</strong></td>
+			<td colspan="2" class="left-border right-border">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="left-border bottom-border"><strong>Part Assurance</strong></td>
+			<td colspan="2" class="left-border bottom-border">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+			<td colspan="2" class="left-border bottom-border"><strong>Acompte</strong></td>
+			<td colspan="2" class="left-border bottom-border">{{ facture.acompte|number_format(0,'','.') }}</td>
+			<td colspan="2" class="left-border bottom-border"><strong>Reste à payer</strong></td>
+			<td colspan="2" class="left-border right-border bottom-border">{{ facture.rap|number_format(0,'','.') }}</td>
+		</tr>
+		<tr>
+			<td colspan="9" class="top-vide signature"></td>
+			<td colspan="4" class="top-vide signature">
+				<u>Le responsable</u>
+			</td>
 		</tr>
 		</tbody>
+		<tfooter>
+			<tr>
+				<td colspan="13" class="footer top-vide text-center ">
+					{{ base.description|raw}}
+				</td>
+			</tr>
+		</tfooter>
 	</table>
 </div>
 

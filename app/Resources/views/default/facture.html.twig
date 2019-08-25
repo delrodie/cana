@@ -13,7 +13,7 @@
 		<tbody>
 		<tr>
 			<td colspan="4" class="logo">
-				<img src="{{ vich_uploader_asset(base, 'imageFile') }}" alt="logo">
+				<img src="{{ asset('uploads/'~base.imageName) }}" alt="">
 			</td>
 			<td colspan="4" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
 				{{ base.libelle}}
