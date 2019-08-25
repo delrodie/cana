@@ -19,10 +19,10 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class,[
-                'attr' => ['class'=> 'form-control', 'placeholder'=>'Le nom de famille du client']
+                'attr' => ['class'=> 'form-control', 'placeholder'=>'Le nom de famille du client', 'autocomplete'=>'off']
             ])
             ->add('prenoms', TextType::class,[
-                'attr'=> ['class'=> 'form-control', 'placeholder'=> 'Les prenoms du client']
+                'attr'=> ['class'=> 'form-control', 'placeholder'=> 'Les prenoms du client', 'autocomplete'=>'off']
             ])
             ->add('sexe', ChoiceType::class,[
                 'attr' => ['class' => 'form-control'],
@@ -33,15 +33,15 @@ class ClientType extends AbstractType
                 'expanded' => false
             ])
             ->add('adresse', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder' => 'La commune ou ville de residence'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'La commune ou ville de residence', 'autocomplete'=>'off'],
                 'required' => false
             ])
             ->add('cel', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone cellulaire du client'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone cellulaire du client', 'autocomplet'=>'off'],
                 'required' => false
             ])
             ->add('tel', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone du client'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone du client', 'autocomplet'=>'off'],
                 'required' => false
             ])
             ->add('statut', CheckboxType::class,[

@@ -12,11 +12,11 @@
 	<table class="table">
 		<tbody>
 		<tr>
-			<td colspan="5" class="logo">
-				<img src="{{ asset('ressources/images/print/logo.png') }}" alt="">
-			</td>
 			<td colspan="4" class="logo">
-				<img src="{{ asset('ressources/images/print/slogan.png') }}" alt="">
+				<img src="{{ vich_uploader_asset(base, 'imageFile') }}" alt="logo">
+			</td>
+			<td colspan="4" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
+				{{ base.libelle}}
 			</td>
 		</tr>
 		<tr>

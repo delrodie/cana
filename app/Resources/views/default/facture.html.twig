@@ -13,13 +13,10 @@
 		<tbody>
 		<tr>
 			<td colspan="4" class="logo">
-				<img src="{{ asset('ressources/images/print/logo.png') }}" alt="">
-				<div class="" style="font-weight: bold">
-					{{ base.libelle }}
-				</div>
+				<img src="{{ vich_uploader_asset(base, 'imageFile') }}" alt="logo">
 			</td>
-			<td colspan="4" class="logo">
-				{{ base.description|raw}}
+			<td colspan="4" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
+				{{ base.libelle}}
 			</td>
 		</tr>
 		<tr>
@@ -57,8 +54,8 @@
 
 		</tr>
 		<tr>
-			<td colspan="2" class="left-border">TYPE DE MONTURE</td>
-			<td colspan="3" class="left-border text-center">PLAN ADD 1,00</td>
+			<td colspan="2" class="left-border">MONTURE</td>
+			<td colspan="3" class="left-border text-center">{{ facture.monture.marque.libelle|upper }} {{ facture.monture.reference}}</td>
 			<td colspan="1" class="left-border right-border text-center">Montant:</td>
 			<td colspan="2" class="right-border text-right">{{ facture.monturePrix|number_format(0,'','.') }} FCFA</td>
 
@@ -100,8 +97,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="8" class="footer top-vide">
-				<img src="{{ asset('ressources/images/print/footer.png') }}" alt="">
+			<td colspan="8" class="footer top-vide text-center ">
+				{{ base.description|raw}}
 			</td>
 		</tr>
 		</tbody>

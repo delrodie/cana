@@ -73,6 +73,9 @@
                                     <td class="text-center">
                                         <a href="{{ absolute_url(path('facture_show', {'slug': facture.slug})) }}" title="Voir details">
                                             <span class="ti-eye"></span>
+                                        </a> |
+                                        <a href="{{ absolute_url(path('pdf_fiche_client', {'slug': facture.slug})) }}" title="Voir la fiche client" target="_blank">
+                                            <span class="ti-file"></span>
                                         </a>
                                         {% if (facture.impression) %}
                                            {% if is_granted("ROLE_ADMIN") %} |

@@ -42,11 +42,13 @@ class RechercheController extends Controller
         $fin = $request->get('date_fin');
 
         $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
 
         return $this->render('default/caisse.html.twig',[
             'factures' => $factures,
             'date_debut' => $debut,
             'date_fin' => $fin,
+            'base' => $base,
             'current_menu' => 'dashboard'
         ]);
     }

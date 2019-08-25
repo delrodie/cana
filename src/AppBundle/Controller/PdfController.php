@@ -30,6 +30,25 @@ class PdfController extends Controller
     }
 
     /**
+     * Fiche client
+     *
+     * @Route("/fiche-client/{slug}", name="pdf_fiche_client")
+     * @Method("GET")
+     */
+    public function ficheclientAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $facture = $em->getRepository('AppBundle:Facture')->findOneBy(array('slug'=>$slug));
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
+
+        return $this->render('default/imprim_ficheclient.html.twig',[
+            'facture' => $facture,
+            'base' => $base
+        ]);
+
+    }
+
+    /**
      * @Route("/caisse/{debut}/{fin}", name="pdf_caisse")
      * @Method("GET")
      */
@@ -37,12 +56,14 @@ class PdfController extends Controller
     {
         $em= $this->getDoctrine()->getManager(); //dump($debut); dump($fin);
         $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
         //dump($factures);die();
 
         return $this->render('default/imprim_caisse.html.twig',[
             'factures' => $factures,
             'date_debut' => $debut,
             'date_fin' => $fin,
+            'base' => $base,
             'current_menu' => 'dashboard'
         ]);
     }

@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +29,7 @@ class BaseType extends AbstractType
                       'placeholder' => 'Slogan'
                   )
             ))
-            ->add('description', CKEditorType::class)
+            ->add('description', TextareaType::class)
             ->add('statut')
             /*->add('imageFile', FileType::class, array(
                   'label' => "Telecharger l'illustration",
