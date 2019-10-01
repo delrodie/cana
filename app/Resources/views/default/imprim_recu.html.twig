@@ -20,7 +20,48 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="12" class="text-center top-border"><h3>RECU</h3></td>
+			<td colspan="12" class="text-center top-border"><h3>RECU N°: {{ versement.id }}</h3></td>
+		</tr>
+		<tr>
+			<td colspan="7" class="top-border bottom-border">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
+			<td colspan="5" class="top-border bottom-border">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.montant|number_format(0,'','.')  }}</strong></span></td>
+		</tr>
+		<tr>
+			<td colspan="12" class="top-border bottom-border">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
+		</tr>
+		<!--<tr>
+			<td colspan="12" class="top-border bottom-border">A la somme de : &nbsp; <span class="font-bold"><strong> </strong></span></td>
+		</tr>-->
+		<tr>
+			<td colspan="12" class="top-border bottom-border">Reste à payer : &nbsp; <span class="font-bold"><strong>{{ versement.reste }} </strong></span></td>
+		</tr>
+		<tr>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td colspan="8">.</td>
+			<td colspan="4" class="text-right border-bottom top-border">
+				<u>Signature</u>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<br>
+	<hr>
+	<br>
+	<table class="table">
+		<tbody>
+		<tr>
+			<td colspan="5" class="logo">
+				<img src="{{ asset('uploads/'~base.imageName) }}" alt="">
+			</td>
+			<td colspan="7" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
+				{{ base.libelle}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="12" class="text-center top-border"><h3>RECU N°: {{ versement.id }}</h3></td>
 		</tr>
 		<tr>
 			<td colspan="7" class="top-border bottom-border">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
