@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impression</title>
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/main.css') }}">
+</head>
+<body>
+<button type="button" id="impression" class="btn btn-primary">Imprimer</button>
+<button type="button" id="fermeture" class="btn btn-danger pull-right">fermer</button>
+<div id="facture">
+	<table class="table">
+		<tbody>
+		<tr>
+			<td colspan="5" class="logo">
+				<img src="{{ asset('uploads/'~base.imageName) }}" alt="">
+			</td>
+			<td colspan="7" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
+				{{ base.libelle}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="12" class="text-center top-border"><h3>RECU</h3></td>
+		</tr>
+		<tr>
+			<td colspan="7" class="top-border bottom-border">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
+			<td colspan="5" class="top-border bottom-border">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.montant|number_format(0,'','.')  }}</strong></span></td>
+		</tr>
+		<tr>
+			<td colspan="12" class="top-border bottom-border">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
+		</tr>
+		<!--<tr>
+			<td colspan="12" class="top-border bottom-border">A la somme de : &nbsp; <span class="font-bold"><strong> </strong></span></td>
+		</tr>-->
+		<tr>
+			<td colspan="12" class="top-border bottom-border">Reste à payer : &nbsp; <span class="font-bold"><strong>{{ versement.reste }} </strong></span></td>
+		</tr>
+		<tr>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td colspan="8">.</td>
+			<td colspan="4" class="text-right border-bottom top-border">
+				<u>Signature</u>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="{{ asset('ressources/vendor/print/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('ressources/vendor/print/jquery-printme.js') }}" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        $("#impression").click(function(){
+            $("#facture").printMe({
+                "path" : ["{{ asset('ressources/vendor/print/visio.css') }}"]
+            });
+        });
+        $("#fermeture").click(function () {
+			window.close();
+        });
+    });
+</script>
+</body>
+</html>

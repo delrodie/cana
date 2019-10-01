@@ -67,4 +67,19 @@ class PdfController extends Controller
             'current_menu' => 'dashboard'
         ]);
     }
+
+    /**
+     * @Route("/{versement}", name="pdf_recu")
+     * @Method("GET")
+     */
+    public function recuAction($versement)
+    {
+        $em= $this->getDoctrine()->getManager(); //dump($debut); dump($fin);
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
+        $versement = $em->getRepository("AppBundle:Versement")->findOneBy(['id'=>$versement]);
+        return $this->render('default/imprim_recu.html.twig',[
+            'versement' => $versement,
+            'base' => $base,
+        ]);
+    }
 }

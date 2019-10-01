@@ -53,6 +53,7 @@
                                 <th class="text-center">Montants</th>
                                 <th class="text-center">Acompte</th>
                                 <th class="text-center">RAP</th>
+                                <th class="text-center">ACTIONS</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -64,6 +65,11 @@
                                     <td class="text-right">{{ versement.montant|number_format(0,'','.') }}</td>
                                     <td class="text-right">{{ versement.acompte|number_format(0,'','.') }}</td>
                                     <td class="text-right">{{ versement.reste|number_format(0,'','.') }}</td>
+									<td class="text-center">
+										<a href="{{ path('pdf_recu', {'versement': versement.id}) }}" title="Imprimer le reçu" target="_blank">
+											<span class="ti-file"></span>
+										</a>
+									</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
