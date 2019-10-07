@@ -102,7 +102,10 @@ table {
 }
 
 .table > tbody > tr > td.signature {
-    padding-top: 100px;
+    padding-top: 50px;
+}
+.table > tbody > tr > td.montantlettre {
+    padding-top: 50px;
 }
 
 .table{

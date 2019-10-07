@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Utils\Facturation;
+use AppBundle\Utils\GestionLettre;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,15 +18,17 @@ class PdfController extends Controller
      * @Route("/facture-{slug}", name="pdf_facture")
      * @Method("GET")
      */
-    public function indexAction($slug, Facturation $facturation)
+    public function indexAction($slug, Facturation $facturation, GestionLettre $gestionLettre)
     {
         $em = $this->getDoctrine()->getManager();
         $facture = $em->getRepository('AppBundle:Facture')->findOneBy(array('slug'=>$slug));
         $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']); //dump($base);die();
         if ($facture) $facturation->impression($slug);
+        $montantLettre = $gestionLettre->nombre_en_lettre($facture->getMontantTTC());
         return $this->render('default/facture.html.twig',[
             'facture' => $facture,
-            'base' => $base
+            'base' => $base,
+            'montant_lettre' =>$montantLettre,
         ]);
     }
 
@@ -72,14 +75,17 @@ class PdfController extends Controller
      * @Route("/{versement}", name="pdf_recu")
      * @Method("GET")
      */
-    public function recuAction($versement)
+    public function recuAction($versement, GestionLettre $gestionLettre)
     {
         $em= $this->getDoctrine()->getManager(); //dump($debut); dump($fin);
         $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
         $versement = $em->getRepository("AppBundle:Versement")->findOneBy(['id'=>$versement]);
+        $montantLettre = $gestionLettre->nombre_en_lettre($versement->getAcompte());
+
         return $this->render('default/imprim_recu.html.twig',[
             'versement' => $versement,
             'base' => $base,
+            'montant_lettre' => $montantLettre,
         ]);
     }
 }

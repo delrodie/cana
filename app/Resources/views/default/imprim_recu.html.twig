@@ -20,28 +20,30 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="12" class="text-center top-border"><h3>RECU N°: {{ versement.id }}</h3></td>
+			<td colspan="12" class="text-center top-vide"><h3>RECU N°: {{ versement.id }}</h3></td>
 		</tr>
 		<tr>
-			<td colspan="7" class="top-border bottom-border">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
-			<td colspan="5" class="top-border bottom-border">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.montant|number_format(0,'','.')  }}</strong></span></td>
+			<td colspan="7" class="top-vide">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
+			<td colspan="5" class="top-vide">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.acompte|number_format(0,'','.')  }}</strong> FCFA</span></td>
 		</tr>
 		<tr>
-			<td colspan="12" class="top-border bottom-border">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
-		</tr>
-		<!--<tr>
-			<td colspan="12" class="top-border bottom-border">A la somme de : &nbsp; <span class="font-bold"><strong> </strong></span></td>
-		</tr>-->
-		<tr>
-			<td colspan="12" class="top-border bottom-border">Reste à payer : &nbsp; <span class="font-bold"><strong>{{ versement.reste }} </strong></span></td>
+			<td colspan="12" class="top-vide">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
 		</tr>
 		<tr>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<td colspan="12" class="top-vide">Montant en lettre : &nbsp; <span class="font-bold"><strong> {{ montant_lettre }} </strong></span></td>
 		</tr>
 		<tr>
-			<td colspan="8">.</td>
-			<td colspan="4" class="text-right border-bottom top-border">
+			<td colspan="12" class="top-vide">Reste à payer : &nbsp;
+				<span class="font-bold"><strong>{{ versement.reste|number_format(0,'','.') }} </strong>FCFA</span>
+				 de la facture: N°{{ versement.facture.numero }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="12" class="top-vide"></td>
+		</tr>
+		<tr>
+			<td colspan="8" class="top-vide">.</td>
+			<td colspan="4" class="text-right top-vide">
 				<u>Signature</u>
 			</td>
 		</tr>
@@ -61,28 +63,27 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="12" class="text-center top-border"><h3>RECU N°: {{ versement.id }}</h3></td>
+			<td colspan="12" class="text-center top-vide"><h3>RECU N°: {{ versement.id }}</h3></td>
 		</tr>
 		<tr>
-			<td colspan="7" class="top-border bottom-border">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
-			<td colspan="5" class="top-border bottom-border">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.montant|number_format(0,'','.')  }}</strong></span></td>
+			<td colspan="7" class="top-vide">Date: &nbsp; <span class="font-bold"><strong>{{ versement.publieLe|date('d/m/Y') }}</strong></span></td>
+			<td colspan="5" class="top-vide">Montant: &nbsp; <span class="font-bold"><strong> {{ versement.acompte|number_format(0,'','.')  }}</strong> FCFA</span></td>
 		</tr>
 		<tr>
-			<td colspan="12" class="top-border bottom-border">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
-		</tr>
-		<!--<tr>
-			<td colspan="12" class="top-border bottom-border">A la somme de : &nbsp; <span class="font-bold"><strong> </strong></span></td>
-		</tr>-->
-		<tr>
-			<td colspan="12" class="top-border bottom-border">Reste à payer : &nbsp; <span class="font-bold"><strong>{{ versement.reste }} </strong></span></td>
+			<td colspan="12" class="top-vide">Client: &nbsp; <span class="font-bold"><strong> {{ versement.facture.client.nom }}  {{ versement.facture.client.prenoms }}</strong></span></td>
 		</tr>
 		<tr>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<td colspan="12" class="top-vide">Montant en lettre : &nbsp; <span class="font-bold"><strong> {{ montant_lettre }} </strong></span></td>
 		</tr>
 		<tr>
-			<td colspan="8">.</td>
-			<td colspan="4" class="text-right border-bottom top-border">
+			<td colspan="12" class="top-vide">Reste à payer : &nbsp; <span class="font-bold"><strong>{{ versement.reste|number_format(0,'','.') }} </strong>FCFA</span></td>
+		</tr>
+		<tr>
+			<td colspan="12" class="top-vide"></td>
+		</tr>
+		<tr>
+			<td colspan="8" class="top-vide">.</td>
+			<td colspan="4" class="text-right top-vide">
 				<u>Signature</u>
 			</td>
 		</tr>
