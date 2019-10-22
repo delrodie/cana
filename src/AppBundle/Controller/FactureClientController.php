@@ -47,6 +47,7 @@ class FactureClientController extends Controller
             $accompte = $request->get('Accompte'); $facture->setAcompte($accompte);
             $code = $facturation->code();
             $facture->setNumero($code); //dump($facture);die();
+            $facture->setStatut(1);
             $em->persist($facture);
             $em->flush();
 

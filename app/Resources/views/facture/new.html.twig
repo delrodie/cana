@@ -192,7 +192,11 @@
                         </div>
                         <div class="form-group col-md-12">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-3">
+                                    <label for="appbundle_facture_peniche">Peniche</label>
+                                    {{ form_widget(form.peniche) }}
+                                </div>
+                                <div class="col-md-6">
                                     <label for="appbundle_facture_monture">Monture</label>
                                     {{ form_widget(form.monture) }}
                                 </div>
@@ -255,14 +259,6 @@
                         </div>
                         <div class="row">
                                 <div class="col-md-6"></div>
-                                <div class="col-md-4">
-                                    <div class="text-left">
-                                        <div class="custom-control custom-checkbox">
-                                            {{ form_widget(form.statut) }}
-                                            <label class="custom-control-label" for="appbundle_facture_statut">Activé</label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         <div class="form-group col-md-12 mb-5 text-right">
                             <input type="hidden" name="mtHT">

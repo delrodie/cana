@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Peniche</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ peniche.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ peniche.numero }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ peniche.nom }}</td>
+            </tr>
+            <tr>
+                <th>Flag</th>
+                <td>{% if peniche.flag %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ peniche.slug }}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ peniche.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ peniche.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ peniche.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ peniche.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('peniche_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('peniche_edit', { 'id': peniche.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -27,7 +27,7 @@ class FactureType extends AbstractType
             ->add('acompte', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'Acompte', 'onkeyup'=>'acompte()', 'style'=>'text-align:right']])
             ->add('rap', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'Reste à payer', 'style'=>'color: red; text-align: right; font-weight: bold', 'readonly'=>'readonly']])
             ->add('partAssurance', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'Part Assurance', 'onkeyup'=>'assurance()', 'style'=>'text-align:right']])
-            ->add('date', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'La date']])
+            ->add('date', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'La date', "autocomplete"=>"off"]])
             //->add('odSph')->add('odCyl')->add('odAxe')->add('odAdd')
             ->add('odQte', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'Qte']])
             ->add('odMontant', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'Montant', 'onkeyup '=> 'odroit()', 'autocomplete'=> 'off', 'style'=>'text-align:right']])
@@ -84,6 +84,17 @@ class FactureType extends AbstractType
                     return $er->findList(1);
                 },
                 'choice_label' => 'libelle'
+            ])
+            ->add('peniche',null, [
+                'attr' => [
+                    'class' => 'form-control facture-select',
+                    'placeholder' => 'selectionnez la peniche'
+                ],
+                'class' => 'AppBundle:Peniche',
+                'query_builder' => function(EntityRepository $er){
+                    return $er->liste();
+                },
+                'choice_label' => 'nom'
             ])
         ;
     }

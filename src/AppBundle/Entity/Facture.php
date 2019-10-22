@@ -215,6 +215,12 @@ class Facture
     private $typeverre;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Peniche")
+     * @ORM\JoinColumn(name="peniche_id", referencedColumnName="id")
+     */
+    private $peniche;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Versement", mappedBy="facture")
      */
     private $versements;
@@ -1094,5 +1100,29 @@ class Facture
     public function getImpression()
     {
         return $this->impression;
+    }
+
+    /**
+     * Set peniche
+     *
+     * @param \AppBundle\Entity\Peniche $peniche
+     *
+     * @return Facture
+     */
+    public function setPeniche(\AppBundle\Entity\Peniche $peniche = null)
+    {
+        $this->peniche = $peniche;
+
+        return $this;
+    }
+
+    /**
+     * Get peniche
+     *
+     * @return \AppBundle\Entity\Peniche
+     */
+    public function getPeniche()
+    {
+        return $this->peniche;
     }
 }
