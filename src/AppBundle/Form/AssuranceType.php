@@ -17,7 +17,7 @@ class AssuranceType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder'=>'Libelle de l\'assurance']
+                'attr' => ['class' => 'form-control', 'placeholder'=>'Libelle de l\'assurance', 'autocomplete'=>"off"]
             ])
             ->add('statut', CheckboxType::class,[
                 'attr'=> ['class'=>'custom-control-input'], 'required'=> false,

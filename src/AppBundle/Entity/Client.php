@@ -65,6 +65,27 @@ class Client
     private $tel;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="garant", type="string", length=255, nullable=true)
+     */
+    private $garant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="souscripteur", type="string", length=255, nullable=true)
+     */
+    private $souscripteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ticket_moderateur", type="string", length=255, nullable=true)
+     */
+    private $ticketModerateur;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="statut", type="boolean", nullable=true)
@@ -485,5 +506,77 @@ class Client
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Set garant
+     *
+     * @param string $garant
+     *
+     * @return Client
+     */
+    public function setGarant($garant)
+    {
+        $this->garant = $garant;
+
+        return $this;
+    }
+
+    /**
+     * Get garant
+     *
+     * @return string
+     */
+    public function getGarant()
+    {
+        return $this->garant;
+    }
+
+    /**
+     * Set souscripteur
+     *
+     * @param string $souscripteur
+     *
+     * @return Client
+     */
+    public function setSouscripteur($souscripteur)
+    {
+        $this->souscripteur = $souscripteur;
+
+        return $this;
+    }
+
+    /**
+     * Get souscripteur
+     *
+     * @return string
+     */
+    public function getSouscripteur()
+    {
+        return $this->souscripteur;
+    }
+
+    /**
+     * Set ticketModerateur
+     *
+     * @param string $ticketModerateur
+     *
+     * @return Client
+     */
+    public function setTicketModerateur($ticketModerateur)
+    {
+        $this->ticketModerateur = $ticketModerateur;
+
+        return $this;
+    }
+
+    /**
+     * Get ticketModerateur
+     *
+     * @return string
+     */
+    public function getTicketModerateur()
+    {
+        return $this->ticketModerateur;
     }
 }

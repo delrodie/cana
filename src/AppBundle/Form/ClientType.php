@@ -37,11 +37,23 @@ class ClientType extends AbstractType
                 'required' => false
             ])
             ->add('cel', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone cellulaire du client', 'autocomplet'=>'off'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone cellulaire du client', 'autocomplete'=>'off'],
                 'required' => false
             ])
             ->add('tel', TextType::class,[
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone du client', 'autocomplet'=>'off'],
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Le telephone du client', 'autocomplete'=>'off'],
+                'required' => false
+            ])
+            ->add('garant', TextType::class,[
+                'attr' => ['class' => 'form-control', 'placeholder' => "Le garant de l'assurance", 'autocomplete'=>'off'],
+                'required' => false
+            ])
+            ->add('souscripteur', TextType::class,[
+                'attr' => ['class' => 'form-control', 'placeholder' => "Le souscripteur de l'assurance", 'autocomplete'=>'off'],
+                'required' => false
+            ])
+            ->add('ticketModerateur', TextType::class,[
+                'attr' => ['class' => 'form-control', 'placeholder' => "Le ticket moderateur de l'assurance", 'autocomplete'=>'off'],
                 'required' => false
             ])
             ->add('statut', CheckboxType::class,[
@@ -50,7 +62,7 @@ class ClientType extends AbstractType
             //->add('slug')->add('publiePar')->add('modifiePar')->add('publieLe')->add('modifieLe')
             ->add('assurance',null, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control assurance-select',
                     'placeholder' => 'selectionnez l\'assurance'
                 ],
                 'class' => 'AppBundle:Assurance',

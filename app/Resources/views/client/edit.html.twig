@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_marque">Assurance</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_marque">Assurance <span style="color: red; font-weight: bold; font-size: 1.3em;">*</span></label>
                                 <div class="col-md-8">
                                     {{ form_widget(edit_form.assurance) }}
                                 </div>
@@ -51,7 +51,31 @@
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_reference">Nom</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_garant">Garant</label>
+                                <div class="col-md-8">
+                                    {{ form_widget(edit_form.garant) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <div class="row">
+                                <label class="col-md-4 text-right" for="appbundle_client_souscripteur">Scouscripteur</label>
+                                <div class="col-md-8">
+                                    {{ form_widget(edit_form.souscripteur) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <div class="row">
+                                <label class="col-md-4 text-right" for="appbundle_client_ticketModerateur">Ticket Moderateur</label>
+                                <div class="col-md-8">
+                                    {{ form_widget(edit_form.ticketModerateur) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <div class="row">
+                                <label class="col-md-4 text-right" for="appbundle_client_reference">Nom <span style="color: red; font-weight: bold; font-size: 1.3em;">*</span></label>
                                 <div class="col-md-8">
                                     {{ form_widget(edit_form.nom) }}
                                 </div>
@@ -59,7 +83,7 @@
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_genre">Prenoms</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_genre">Prenoms <span style="color: red; font-weight: bold; font-size: 1.3em;">*</span></label>
                                 <div class="col-md-8">
                                     {{ form_widget(edit_form.prenoms) }}
                                 </div>
@@ -67,7 +91,7 @@
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_montant">Statut</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_montant">Statut <span style="color: red; font-weight: bold; font-size: 1.3em;">*</span></label>
                                 <div class="col-md-8">
                                     {{ form_widget(edit_form.sexe) }}
                                 </div>
@@ -83,7 +107,7 @@
                         </div>
                         <div class="form-group col-md-10">
                             <div class="row">
-                                <label class="col-md-4 text-right" for="appbundle_client_stock">Contact</label>
+                                <label class="col-md-4 text-right" for="appbundle_client_stock">Contact <span style="color: red; font-weight: bold; font-size: 1.3em;">*</span></label>
                                 <div class="col-md-4">
                                     {{ form_widget(edit_form.cel) }}
                                 </div>
@@ -132,10 +156,17 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/select2.min.css')) }}">
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
     <script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+    <script src="{{ absolute_url(asset('ressources/js/select2.full.min.js')) }}"></script>
+    <script>
+        $(".assurance-select").select2({
+            tags: true
+        });
+    </script>
 {% endblock %}
