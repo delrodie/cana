@@ -91,12 +91,4 @@ class Facturation
         return true;
     }
 
-    /**
-     * Determination du montant en lettre
-     */
-    public function montantLettre()
-    {
-        
-    }
-
 }

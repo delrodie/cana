@@ -191,6 +191,13 @@ class Facture
     private $impression;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="livraison", type="boolean", nullable=true)
+     */
+    private $livraison;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="factures")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
@@ -1124,5 +1131,29 @@ class Facture
     public function getPeniche()
     {
         return $this->peniche;
+    }
+
+    /**
+     * Set livraison
+     *
+     * @param boolean $livraison
+     *
+     * @return Facture
+     */
+    public function setLivraison($livraison)
+    {
+        $this->livraison = $livraison;
+
+        return $this;
+    }
+
+    /**
+     * Get livraison
+     *
+     * @return boolean
+     */
+    public function getLivraison()
+    {
+        return $this->livraison;
     }
 }

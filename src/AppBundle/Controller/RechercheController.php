@@ -38,10 +38,10 @@ class RechercheController extends Controller
     public function caisseAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $debut = $request->get('date_debut');
+        $debut = $request->get('date_debut'); //dump($debut);die();
         $fin = $request->get('date_fin');
 
-        $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+        $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin); //dump($factures);die();
         $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
 
         return $this->render('default/caisse.html.twig',[
@@ -50,6 +50,54 @@ class RechercheController extends Controller
             'date_fin' => $fin,
             'base' => $base,
             'current_menu' => 'dashboard'
+        ]);
+    }
+
+    /**
+     * @Route("/assurance/", name="recherche_assurance_index")
+     * @Method({"GET","POST"})
+     */
+    public function assuranceAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $assuranceSearch = $request->get('assurance'); //dump($assuranceSearch);die();
+        $debut = $request->get('date_debut');
+        $fin = $request->get('date_fin');
+
+        $factures = $em->getRepository("AppBundle:Facture")->findCaissePeriode($debut,$fin);
+        $assurances = $em->getRepository("AppBundle:Assurance")->findAll();
+
+        return $this->render("default/assurance.html.twig",[
+            'factures' => $factures,
+            'assurances' => $assurances,
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'current_menu' => 'dashboard',
+        ]);
+    }
+
+    /**
+     * @Route("/assurance/recherche", name="recherche_assurance_show")
+     * @Method({"GET","POST"})
+     */
+    public function assuranceShowction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $assuranceSearch = $request->get('assurance');
+        $debut = $request->get('date_debut');
+        $fin = $request->get('date_fin'); //dump($assuranceSearch);die();
+
+        $factures = $em->getRepository("AppBundle:Facture")->findByAssurance($assuranceSearch,$debut,$fin); //dump($assuranceSearch);die();
+        $assurances = $em->getRepository("AppBundle:Assurance")->findAll();
+        if ($assuranceSearch) $assurance = $em->getRepository("AppBundle:Assurance")->findOneBy(['slug'=>$assuranceSearch]); //dump($assurance);die();
+
+        return $this->render("default/assurance_show.html.twig",[
+            'factures' => $factures,
+            'assurances' => $assurances,
+            'assurance' => $assurance,
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'current_menu' => 'dashboard',
         ]);
     }
 }

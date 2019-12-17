@@ -106,11 +106,14 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('f')
                     ->leftJoin('f.monture', 'm')
                     ->leftJoin('f.client', 'c')
+                    ->leftJoin('f.peniche', 'p')
                     ->where('f.numero LIKE :search')
                     ->orWhere('m.reference LIKE :search')
                     ->orWhere('c.nom LIKE :search')
                     ->orWhere('c.prenoms LIKE :search')
                     ->orWhere('f.montantTTC LIKE :search')
+                    ->orWhere('p.nom LIKE :search')
+                    ->orWhere('p.numero LIKE :search')
                     ->setParameter('search', '%'.$search.'%')
                     ->getQuery()->getResult()
             ;
@@ -150,7 +153,7 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             }
         }elseif ($fin){
             return $this->createQueryBuilder('f')
-                        ->where('f.statut')
+                        ->where('f.statut = 1')
                         ->andWhere('f.date <= :fin')
                         ->orderBy('f.date', 'DESC')
                         ->setParameter('fin', $fin)
@@ -163,5 +166,40 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
                         ->getQuery()->getResult()
                 ;
         }
+    }
+
+    /**
+     * Les factures non livrées
+     */
+    public function findLivraison($statut = null)
+    {
+        if ($statut){
+            return $this->createQueryBuilder('f')
+                ->where('f.livraison IS NOT NULL')
+                ->getQuery()->getResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('f')
+                ->where('f.livraison IS NULL')
+                ->getQuery()->getResult()
+                ;
+        }
+    }
+
+    public function findByAssurance($assurance,$debut,$fin)
+    {
+        return $this->createQueryBuilder('f')
+                    ->innerJoin('f.client', 'c')
+                    ->innerJoin('c.assurance', 'a')
+                    ->where('a.slug = :assurance')
+                    ->andWhere('f.date >= :debut')
+                    ->andWhere('f.date <= :fin')
+                    ->setParameters([
+                        'assurance'=>$assurance,
+                        'debut'=>$debut,
+                        'fin'=>$fin,
+                    ])
+                    ->getQuery()->getResult()
+            ;
     }
 }

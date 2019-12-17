@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Facture;
 use AppBundle\Utils\Facturation;
+use AppBundle\Utils\GestionPeniche;
 use AppBundle\Utils\Inventaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,7 +41,7 @@ class FactureController extends Controller
      * @Route("/new", name="facture_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, Facturation $facturation, Inventaire $inventaire)
+    public function newAction(Request $request, Facturation $facturation, Inventaire $inventaire, GestionPeniche $gestionPeniche)
     {
         $facture = new Facture();
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
@@ -68,6 +69,7 @@ class FactureController extends Controller
 
             $inventaire->destockage($facture->getMonture()->getId());
             $facturation->encaissement($facture->getId());
+            $gestionPeniche->addFlag($facture->getPeniche()->getId());
 
             return $this->redirectToRoute('facture_show', array('slug' => $facture->getSlug()));
         }

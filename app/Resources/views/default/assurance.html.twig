@@ -34,22 +34,30 @@
                     {% else %}
                         <h3 class="widget-title mb-5">Point gloabl de la caisse</h3>
                     {% endif %}
-                    <form action="{{ path('recherche_caisse') }}" method="post">
+                    <form action="{{ path('recherche_assurance_show') }}" method="post">
                         <div class="row mb-5">
-                                <div class="col-md-1">
-                                    <label for="">Periode </label>
+
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <select name="assurance" id="assurance" class="form-control" required>
+                                            <option value="">-- Selectionnez l'assurance --</option>
+                                            {% for assurance in assurances %}
+                                                <option value="{{ assurance.slug }}">{{ assurance.libelle }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-3" id="caisse-datepicker">
+                                <div class="col-md-2" id="caisse-datepicker">
                                     <div class="input-group date">
-                                        <input type="text" name="date_debut" class="form-control" autocomplete="off">
+                                        <input type="text" name="date_debut" class="form-control" autocomplete="off" placeholder="Date debut" required>
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar-o"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3" id="caisse-datepicker">
+                                <div class="col-md-2" id="caisse-datepicker">
                                     <div class="input-group date">
-                                        <input type="text" name="date_fin" class="form-control" autocomplete="off">
+                                        <input type="text" name="date_fin" class="form-control" autocomplete="off" placeholder="date fin" required>
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar-o"></i>
                                         </div>
@@ -75,76 +83,36 @@
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Date</th>
-                                    <th class="text-center">Numero</th>
                                     <th class="text-center">Assurances</th>
-                                    <th class="text-center">Nom et Prenoms</th>
-                                    <th class="text-center">Montants</th>
-                                    <th class="text-center">Acompte</th>
-                                    <th class="text-center">Assurance</th>
-                                    <th class="text-center">RAP</th>
+                                    <th class="text-center">Garants</th>
+                                    <th class="text-center">Souscripteurs</th>
+                                    <th class="text-center">Clients</th>
+                                    <th class="text-center">Montant</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% set mtGlobal = 0 %}{% set acompteGlobal = 0 %}{% set assuranceGlobal = 0 %}{% set rapGlobal = 0 %}
+                                {% set assuranceGlobal = 0 %}
                                 {% for facture in factures %}
                                     <tr>
                                         <td class="text-right">{{ loop.index }}</td>
                                         <td>{{ facture.date|date('d-m-Y') }}</td>
-                                        <td>{{ facture.numero }}</td>
                                         <td>{{ facture.client.assurance.libelle }}</td>
+                                        <td>{{ facture.client.garant }}</td>
+                                        <td>{{ facture.client.souscripteur }}</td>
                                         <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
-                                        <td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
-                                        <td class="text-right">{{ facture.acompte|number_format(0,'','.') }}</td>
                                         <td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
-                                        <td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
                                     </tr>
-                                    {% set mtGlobal = mtGlobal+facture.montantTTC %}
-                                    {% set acompteGlobal = acompteGlobal+facture.acompte %}
                                     {% set assuranceGlobal = assuranceGlobal+facture.partAssurance %}
-                                    {% set rapGlobal = rapGlobal+facture.rap %}
                                 {% endfor %}
                                 </tbody>
                             </table>
                     </div>
-                        <div class="row mt-5 ">
-                            <div class="col-md-9 text-right">
-                                Montant Total:
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <strong>{{ mtGlobal|number_format(0,'','.') }}</strong>
-                            </div>
-                            <div class="col-md-1 text-left">
-                                F CFA
-                            </div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-md-9 text-right">
-                                Total Acompte:
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <strong>{{ acompteGlobal|number_format(0,'','.') }}</strong>
-                            </div>
-                            <div class="col-md-1 text-left">
-                                F CFA
-                            </div>
-                        </div>
                         <div class="row mt-1 ">
                             <div class="col-md-9 text-right">
                                 Total part assurance:
                             </div>
                             <div class="col-md-2 text-right">
                                 <strong>{{ assuranceGlobal|number_format(0,'','.') }}</strong>
-                            </div>
-                            <div class="col-md-1 text-left">
-                                F CFA
-                            </div>
-                        </div>
-                        <div class="row mt-1 mb-5 ">
-                            <div class="col-md-9 text-right">
-                                Total reste à payer:
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <strong>{{ rapGlobal|number_format(0,'','.') }}</strong>
                             </div>
                             <div class="col-md-1 text-left">
                                 F CFA

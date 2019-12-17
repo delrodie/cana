@@ -122,7 +122,8 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('homepage') }}">Statistiques</a>
                                 {% if is_granted("ROLE_ADMIN") %}
-                                    <a class="dropdown-item" href="{{ absolute_url(path('recherche_caisse')) }}">Points caisse</a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('recherche_caisse')) }}">Points caisses</a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('recherche_assurance_index')) }}">Points assurances</a>
                                 {% endif %}
                             </div>
                         </li>
@@ -164,15 +165,14 @@
                                 <!--<a class="dropdown-item" href="#">Payment Invoice</a>-->
                             </div>
                         </li>
-                        <!--<li class="nav-item dropdown">
+                        <li class="nav-item dropdown {% if (current_menu == 'livraison') %} active {% endif %}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-key"></span> Rendez-vous</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="add-room.html">Ajouter un RDV</a>
-                                <a class="dropdown-item" href="rooms.html">Liste des RDV</a>
-                                <a class="dropdown-item" href="edit-room.html">Liste des livraisons</a>
+                                <a class="dropdown-item" href="{{ path('rdv_index') }}">Liste des RDV</a>
+                                <a class="dropdown-item" href="#">Liste des livraisons</a>
                             </div>
-                        </li>-->
+                        </li>
                         <li class="nav-item dropdown {% if (current_menu == 'parametre') %} active {% endif %}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-file"></span> Paramètres</a>

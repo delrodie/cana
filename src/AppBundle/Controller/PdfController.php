@@ -88,4 +88,26 @@ class PdfController extends Controller
             'montant_lettre' => $montantLettre,
         ]);
     }
+
+    /**
+     * @Route("/{assuranceID}/{debut}/{fin}", name="pdf_assurance")
+     * @Method("GET")
+     */
+    public function assuranceAction($assuranceID,$debut,$fin)
+    {
+        $em= $this->getDoctrine()->getManager(); //dump($debut); dump($fin);
+        $factures = $em->getRepository("AppBundle:Facture")->findByAssurance($assuranceID,$debut,$fin);
+        $base = $em->getRepository("AppBundle:Base")->findOneBy(['statut'=>1], ['id'=>'DESC']);
+        $assurance = $em->getRepository("AppBundle:Assurance")->findOneBy(['slug'=>$assuranceID]);
+        //dump($factures);die();
+
+        return $this->render('default/imprim_assurance.html.twig',[
+            'factures' => $factures,
+            'assurance' => $assurance,
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'base' => $base,
+            'current_menu' => 'dashboard'
+        ]);
+    }
 }

@@ -79,11 +79,13 @@
                         <a href="{{ absolute_url(path('client_edit', {'slug': client.slug})) }}" class="btn btn-primary btn-lg">Modifier</a>
                         <a href="{{ absolute_url(path('facturation_new', {'client': client.slug})) }}" class="btn btn-primary btn-lg">Facturation</a>
                     </div>
-                    <div class="col-md-12">
-                        {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce client ?");'}}) }}
-                        <input type="submit" value="Supprimer" class="btn btn-danger btn-lg">
-                        {{ form_end(delete_form) }}
-                    </div>
+                    {% if factures is null %}
+                        <div class="col-md-12">
+                            {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce client ?");'}}) }}
+                            <input type="submit" value="Supprimer" class="btn btn-danger btn-lg">
+                            {{ form_end(delete_form) }}
+                        </div>
+                    {% endif %}
                 </div>
                 {% if (factures) %}
                     <div class="row">

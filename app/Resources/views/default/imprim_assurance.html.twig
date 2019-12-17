@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impression</title>
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('ressources/vendor/print/main.css') }}">
+</head>
+<body>
+<button type="button" id="impression" class="btn btn-primary">Imprimer</button>
+<button type="button" id="fermeture" class="btn btn-danger pull-right">fermer</button>
+<div id="facture">
+	<table class="table">
+		<tbody>
+		<tr>
+			<td colspan="4" class="logo">
+				<img src="{{ asset('uploads/'~base.imageName) }}" alt="">
+			</td>
+			<td colspan="4" class="logo text-left" style="font-weight: bold; font-style: italic; padding-top: 50px; font-size: 16px;">
+				{{ base.libelle}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="8" class="top-vide text-center">
+				<h3>POINT {{ assurance.libelle|upper }} DU <strong>{{ date_debut|date('d-m-Y') }}</strong> AU <strong>{{ date_fin|date('d-m-Y') }}</strong></h3>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Id
+			</td>
+			<td>
+				Dates
+			</td>
+			<td>
+				Garants
+			</td>
+			<td>
+				Souscripteurs
+			</td>
+			<td>
+				Clients
+			</td>
+			<td>
+				Tickets
+			</td>
+			<td>
+				Montants
+			</td>
+		</tr>
+		{% set assuranceGlobal = 0 %}
+		{% for facture in factures %}
+			<tr>
+				<td class="text-right">{{ loop.index }}</td>
+				<td>{{ facture.date|date('d-m-Y') }}</td>
+				<td>{{ facture.client.garant }}</td>
+				<td>{{ facture.client.souscripteur }}</td>
+				<td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+				<td>{{ facture.client.ticketModerateur }}</td>
+				<td class="text-right">{{ facture.partAssurance|number_format(0,'','.') }}</td>
+			</tr>
+			{% set assuranceGlobal = assuranceGlobal+facture.partAssurance %}
+		{% endfor %}
+		<tr>
+			<td colspan="6" class="text-right">TOTAUX</td>
+			<td class="text-right font-bold">{{ assuranceGlobal|number_format(0,'','.') }}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="{{ asset('ressources/vendor/print/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('ressources/vendor/print/jquery-printme.js') }}" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        $("#impression").click(function(){
+            $("#facture").printMe({
+                "path" : ["{{ asset('ressources/vendor/print/visio.css') }}"]
+            });
+        });
+        $("#fermeture").click(function () {
+			window.close();
+        });
+    });
+</script>
+</body>
+</html>

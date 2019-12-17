@@ -12,6 +12,6 @@ class PenicheRepository extends \Doctrine\ORM\EntityRepository
 {
     public function liste()
     {
-        return $this->createQueryBuilder('p')->where('p.flag IS NULL')->orderBy('p.numero', 'ASC');
+        return $this->createQueryBuilder('p')->where('p.flag <> 1')->orWhere('p.flag IS NULL')->orderBy('p.numero', 'ASC');
     }
 }

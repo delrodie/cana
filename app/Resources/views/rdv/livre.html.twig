@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} Gestion des livraisons {% endblock %}
+
+{% block body %}
+	<div class="container mt-0">
+		<div class="row breadcrumb-bar">
+			<div class="col-md-6">
+				<h3 class="block-title">Gestion des livraisons</h3>
+			</div>
+			<div class="col-md-6">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{{ path('homepage') }}">
+							<span class="ti-home"></span>
+						</a>
+					</li>
+					<li class="breadcrumb-item">livraisons</li>
+					<li class="breadcrumb-item active">Liste</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12 text-right">
+
+					</div>
+				</div>
+				<div class="widget-area-2 proclinic-box-shadow">
+					<h3 class="widget-title">Listes des livraisons</h3>
+					<div class="row mb-5">
+						<div class="col-md-12 text-right">
+							<a href="{{ absolute_url(path('facture_new')) }}" class="btn btn-primary mt-3 mb-0"><span class="ti-plus"></span> Ajouter</a>
+						</div>
+					</div>
+					{% for message in app.flashes('notice') %}
+						<div class="alert alert-success alert-dismissible text-center fade show mt-2" role="alert">
+							<strong>{{ message }} </strong>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+					{% endfor %}
+					<div class="table-responsive mb-3">
+						<table id="tableId" class="table table-bordered table-striped">
+							<thead>
+							<tr>
+								<th class="text-center">ID</th>
+								<th class="text-center">Factures</th>
+								<th class="text-center">Peniches</th>
+								<th class="text-center">Nom et Prenoms</th>
+								<th class="text-center">Montures</th>
+								<th class="text-center">Montants</th>
+								<th class="text-center">RAP</th>
+								<th class="text-center">Actions</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for facture in factures %}
+								<tr>
+									<td class="text-right">{{ loop.index }}</td>
+									<td>
+										<a href="{{ path('facture_show', {'slug': facture.slug}) }}" title="Voir la facture">{{ facture.numero }}</a>
+									</td>
+									<td>{{ facture.peniche.numero }} - {{ facture.peniche.nom }}</td>
+									<td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+									<td>{{ facture.monture.marque.libelle }} {{ facture.monture.reference }}</td>
+									<td class="text-right">{{ facture.montantTTC|number_format(0,'','.') }}</td>
+									<td class="text-right">{{ facture.rap|number_format(0,'','.') }}</td>
+									<td class="text-center">
+										<a href="{{ absolute_url(path('pdf_fiche_client', {'slug': facture.slug})) }}" title="Voir la fiche client" target="_blank">
+											<span class="ti-file"></span>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ absolute_url(asset('ressources/datatable/jquery.dataTables.min.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/datatable/dataTables.bootstrap4.min.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/js/custom-datatables.js')) }}"></script>
+	<script src="{{ absolute_url(asset('ressources/vendor/print/printThis.js')) }}"></script>
+	<script>
+        $('#basic').on("click", function () {
+            $('.table').printThis({
+                base: "https://jasonday.github.io/printThis/",
+                loadCSS: "{{ absolute_url(asset('ressources/css/styles.css')) }}"
+            });
+        });
+	</script>
+{% endblock %}
