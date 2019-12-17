@@ -135,27 +135,31 @@
                                 <a class="dropdown-item" href="{{ absolute_url(path('client_index')) }}">Tous les clients</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown {% if(current_menu == 'monture') %}active{% endif %}">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                               aria-expanded="false"><span class="ti-user"></span> Montures</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ absolute_url(path('marque_index')) }}">Marques</a>
-                                <a class="dropdown-item" href="{{ absolute_url(path('monture_index')) }}">Montures</a>
-                                <!--<a class="dropdown-item" href="#">Fournisseurs</a>
-                                <a class="dropdown-item" href="#">Approvisionnements</a>
-                                <a class="dropdown-item" href="#">Destockage</a>-->
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown {% if (current_menu == 'verre') %}active{% endif %}">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                               aria-expanded="false"><span class="ti-pencil-alt"></span> Verres</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ absolute_url(path('typeverre_index')) }}">Types verres</a>
-                                <!--<a class="dropdown-item" href="#">Fournisseurs</a>
-                                <a class="dropdown-item" href="#">Approvisionnements</a>
-                                <a class="dropdown-item" href="#">Destockage</a>-->
-                            </div>
-                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item dropdown {% if(current_menu == 'monture') %}active{% endif %}">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false"><span class="ti-user"></span> Montures</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ absolute_url(path('marque_index')) }}">Marques</a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('monture_index')) }}">Montures</a>
+                                    <!--<a class="dropdown-item" href="#">Fournisseurs</a>
+									<a class="dropdown-item" href="#">Approvisionnements</a>
+									<a class="dropdown-item" href="#">Destockage</a>-->
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item dropdown {% if (current_menu == 'verre') %}active{% endif %}">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false"><span class="ti-pencil-alt"></span> Verres</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ absolute_url(path('typeverre_index')) }}">Types verres</a>
+                                    <!--<a class="dropdown-item" href="#">Fournisseurs</a>
+									<a class="dropdown-item" href="#">Approvisionnements</a>
+									<a class="dropdown-item" href="#">Destockage</a>-->
+                                </div>
+                            </li>
+                        {% endif %}
                         <li class="nav-item dropdown {% if (current_menu == 'facture') %}active{% endif %}">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                aria-expanded="false"><span class="ti-money"></span> Facturations</a>
@@ -173,18 +177,20 @@
                                 <a class="dropdown-item" href="#">Liste des livraisons</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown {% if (current_menu == 'parametre') %} active {% endif %}">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                               aria-expanded="false"><span class="ti-file"></span> Paramètres</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ absolute_url(path('assurance_index')) }}">Assurances </a>
-                                <a class="dropdown-item" href="{{ absolute_url(path('traitement_index')) }}">Traitements</a>
-                                <a class="dropdown-item" href="{{ absolute_url(path('peniche_index')) }}">Peniche</a>
-                                <a class="dropdown-item" href="{{ absolute_url(path('base_index')) }}">Parametrage</a>
-                                <!--<a class="dropdown-item" href="{{ absolute_url(asset('ressources/docs/optique-staint-esther.pdf')) }}" target="_blank">Fiche client</a>-->
-                                <!--<a class="dropdown-item" href="#">Utilisateurs</a>-->
-                            </div>
-                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item dropdown {% if (current_menu == 'parametre') %} active {% endif %}">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false"><span class="ti-file"></span> Paramètres</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ absolute_url(path('assurance_index')) }}">Assurances </a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('traitement_index')) }}">Traitements</a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('peniche_index')) }}">Peniche</a>
+                                    <a class="dropdown-item" href="{{ absolute_url(path('base_index')) }}">Parametrage</a>
+                                    <!--<a class="dropdown-item" href="{{ absolute_url(asset('ressources/docs/optique-staint-esther.pdf')) }}" target="_blank">Fiche client</a>-->
+                                    <a class="dropdown-item" href="#">Utilisateurs</a>
+                                </div>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
