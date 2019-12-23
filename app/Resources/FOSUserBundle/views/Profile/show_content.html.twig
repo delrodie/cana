@@ -1,6 +1,27 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+<div class="row">
+    <div class="col-sm-6 auth-box mt-md-5">
+        <div class="proclinic-box-shadow">
+            <h3 class="widget-title">Mot de passe changé avec succès</h3>
+            <div class="form-group row">
+                <div class="col-sm-12 text-left">
+                    <span class="text-danger">Nom Utilisateur</span> : <strong>{{ user.username }}</strong>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12 text-left">
+                    <span class="text-danger">Adresse Email</span> : <strong>{{ user.email }}</strong>
+                </div>
+            </div>
+            <div class="button-btn-block">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ path('homepage') }}" class="btn btn-primary btn-lg btn-block">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

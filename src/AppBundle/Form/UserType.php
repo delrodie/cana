@@ -24,7 +24,7 @@ class UserType extends AbstractType
             ->add('username', TextType::class, array(
               'attr'  => array(
                   'class' => 'form-control',
-                  'autocomplete'  => 'off'
+                  'autocomplete'  => 'off',
               )
         ))
             //->add('usernameCanonical')
@@ -37,13 +37,16 @@ class UserType extends AbstractType
             //->add('emailCanonical')
             ->add('enabled')
             //->add('salt')
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('password', PasswordType::class,[
+                'attr'=>['class'=>'form-control form-control-lg', 'placeholder'=>"Mot de passe"], 'required'=>false
+            ])
+            /*->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'required' => $options['passwordRequired'],
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Répétez le mot de passe'),
-            ))
+            ))*/
             //->add('lastLogin')->add('confirmationToken')->add('passwordRequestedAt')
             ->add('roles', ChoiceType::class, array(
               'choices' => array(
